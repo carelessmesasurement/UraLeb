@@ -32,7 +32,7 @@
             displaySection('welcome-section');
         }
     </script>
-       <script>
+    <script>
         let currentSortColumn = null;
         let currentSortOrder = 'asc';
     
@@ -54,9 +54,9 @@
                 const cellB = rowB.cells[columnIndex].innerText;
     
                 if (columnIndex === 0) { // Date column
-                    return currentSortOrder === 'asc' 
-                        ? new Date(cellA) - new Date(cellB) 
-                        : new Date(cellB) - new Date(cellA);
+                    const dateA = parseDate(cellA);
+                    const dateB = parseDate(cellB);
+                    return currentSortOrder === 'asc' ? dateA - dateB : dateB - dateA;
                 } else { // Severity and Description columns
                     return currentSortOrder === 'asc' 
                         ? cellA.localeCompare(cellB) 
@@ -75,6 +75,12 @@
             // Apply the sorted class to the current header
             const currentHeader = table.rows[0].cells[columnIndex];
             currentHeader.classList.add(currentSortOrder === 'asc' ? 'sorted-asc' : 'sorted-desc');
+        }
+    
+        function parseDate(dateString) {
+            const parts = dateString.split('/');
+            // Parse date as DD/MM/YYYY
+            return new Date(parts[2], parts[1] - 1, parts[0]); // Months are zero-based
         }
     </script>
 </head>
