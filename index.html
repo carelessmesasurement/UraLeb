@@ -295,26 +295,31 @@
                             <h4>Plant Status</h4>
                             <p id="plant-status"><strong>Operational</strong></p>
                             <img src="https://via.placeholder.com/50" alt="Operational Icon" class="status-icon" />
+                            <div class="virtual-valve" onclick="toggleValve('plant-status')"></div>
                         </div>
                         <div class="status-box" style="background-color: #e0f7fa;">
                             <h4>Temperature</h4>
                             <p id="temperature"><strong>75°C</strong></p>
                             <img src="https://via.placeholder.com/50" alt="Temperature Icon" class="status-icon" />
+                            <div class="virtual-valve" onclick="updateTemperature()"></div>
                         </div>
                         <div class="status-box" style="background-color: #ffe0b2;">
                             <h4>Pressure</h4>
                             <p id="pressure"><strong>150 Bar</strong></p>
                             <img src="https://via.placeholder.com/50" alt="Pressure Icon" class="status-icon" />
+                            <div class="virtual-valve" onclick="updatePressure()"></div>
                         </div>
                         <div class="status-box" style="background-color: #ffebee;">
                             <h4>Radiation Levels</h4>
                             <p id="radiation-levels"><strong>0.1 µSv/h</strong></p>
                             <img src="https://via.placeholder.com/50" alt="Radiation Icon" class="status-icon" />
+                            <div class="virtual-valve" onclick="updateRadiation()"></div>
                         </div>
                         <div class="status-box" style="background-color: #d1c4e9;">
                             <h4>Energy Output</h4>
                             <p id="energy-output"><strong>100 MW</strong></p>
                             <img src="https://via.placeholder.com/50" alt="Energy Icon" class="status-icon" />
+                            <div class="virtual-valve" onclick="updateEnergyOutput()"></div>
                         </div>
                     </div>
                 
@@ -342,6 +347,41 @@
                             status.textContent = status.textContent === 'OFF' ? 'ON' : 'OFF';
                         }
                     }
+                
+                    function toggleValve(statusID) {
+                        const status = document.getElementById(statusID);
+                        const newStatus = status.textContent === "Operational" ? "Shut Down" : "Operational";
+                        status.textContent = newStatus;
+                        alert(`Plant status changed to ${newStatus}`);
+                    }
+                
+                    function updateTemperature() {
+                        setTimeout(() => {
+                            const temperature = Math.floor(Math.random() * 100) + 50; // Random temperature
+                            document.getElementById('temperature').textContent = `${temperature}°C`;
+                        }, 1500); // 1.5-second delay
+                    }
+                
+                    function updatePressure() {
+                        setTimeout(() => {
+                            const pressure = Math.floor(Math.random() * 100) + 100; // Random pressure
+                            document.getElementById('pressure').textContent = `${pressure} Bar`;
+                        }, 1500); // 1.5-second delay
+                    }
+                
+                    function updateRadiation() {
+                        setTimeout(() => {
+                            const radiation = (Math.random() * 2).toFixed(2); // Random radiation
+                            document.getElementById('radiation-levels').textContent = `${radiation} µSv/h`;
+                        }, 1500); // 1.5-second delay
+                    }
+                
+                    function updateEnergyOutput() {
+                        setTimeout(() => {
+                            const energy = Math.floor(Math.random() * 100) + 50; // Random energy output
+                            document.getElementById('energy-output').textContent = `${energy} MW`;
+                        }, 1500); // 1.5-second delay
+                    }
                 </script>
                 
                 <style>
@@ -358,6 +398,7 @@
                         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
                         text-align: center;
                         transition: transform 0.3s, box-shadow 0.3s;
+                        position: relative; /* For positioning virtual valves */
                     }
                 
                     .status-box:hover {
@@ -369,6 +410,23 @@
                         margin-top: 10px;
                         width: 50px; /* Adjust icon size */
                         height: auto;
+                    }
+                
+                    .virtual-valve {
+                        width: 30px;
+                        height: 30px;
+                        background-color: #555;
+                        border-radius: 50%;
+                        position: absolute;
+                        right: 10px;
+                        bottom: 10px;
+                        cursor: pointer;
+                        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+                        transition: background-color 0.3s;
+                    }
+                
+                    .virtual-valve:hover {
+                        background-color: #333;
                     }
                 
                     .retro-button {
