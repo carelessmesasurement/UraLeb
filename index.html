@@ -121,45 +121,48 @@
 
                 <div id="password-section" class="content-section" style="display:none;">
                     <h2>Enter Password to Access Employee Section</h2>
-                    <p>Please enter the password to view the logs and factory faults:</p>
+                    <p>Please enter the password to view the employee hub:</p>
                     <input type="password" id="password-input" placeholder="Enter password" style="padding: 5px; width: 200px;">
                     <button onclick="checkPassword()" class="nav-button">Submit</button>
                     <div id="error-message" style="color: red; display: none;"></div>
                 </div>
 
                 <div id="employee-section" class="content-section" style="display:none;">
-                    <h2>Employee Section</h2>
-                    <div id="logs-section" style="margin-bottom: 20px;">
-                        <h3>Research Logs</h3>
-                        <ul>
-                            <li>
-                                <strong>Date:</strong> 12/08/2024 <br>
-                                <i>Uranium-235 experiments showed promising results, achieving a new breakthrough in isotope separation.</i>
-                            </li>
-                            <li>
-                                <strong>Date:</strong> 25/09/2024 <br>
-                                <i>Safety protocols updated following new insights from the international nuclear safety commission.</i>
-                            </li>
-                            <li>
-                                <strong>Date:</strong> 30/09/2024 <br>
-                                <i>Energy output from reactor simulations has increased by 15%, suggesting potential for higher efficiency.</i>
-                            </li>
-                        </ul>
-                    </div>
-                    <div id="faults-section">
-                        <h3>Factory Faults</h3>
-                        <ul>
-                            <li><strong>Reactor #2:</strong> Overheating detected; scheduled maintenance required.</li>
-                            <li><strong>Cooling System:</strong> Malfunction; urgent repairs necessary.</li>
-                            <li><strong>Isotope Separator:</strong> Calibration error; immediate attention needed.</li>
-                        </ul>
-                    </div>
+                    <h2>Employee Hub</h2>
+                    <p>Welcome to the employee hub. Please select an option to proceed:</p>
+                    <button onclick="displaySection('logs-section')" class="nav-button">View Research Logs</button>
+                    <button onclick="displaySection('faults-section')" class="nav-button">View Factory Faults</button>
+                </div>
+
+                <div id="logs-section" class="content-section" style="display:none;">
+                    <h2>Research Logs</h2>
+                    <ul>
+                        <li>
+                            <strong>Date:</strong> 12/08/2024 <br>
+                            <i>Uranium-235 experiments showed promising results, achieving a new breakthrough in isotope separation.</i>
+                        </li>
+                        <li>
+                            <strong>Date:</strong> 23/09/2024 <br>
+                            <i>Initial safety inspections completed with no significant issues reported.</i>
+                        </li>
+                        <li>
+                            <strong>Date:</strong> 30/09/2024 <br>
+                            <i>New safety protocols implemented across all facilities.</i>
+                        </li>
+                    </ul>
+                    <button onclick="displaySection('employee-section')" class="nav-button">Back</button>
+                </div>
+
+                <div id="faults-section" class="content-section" style="display:none;">
+                    <h2>Factory Faults</h2>
+                    <p>Currently, there are no major faults reported in the factory operations. All systems are operational.</p>
+                    <button onclick="displaySection('employee-section')" class="nav-button">Back</button>
                 </div>
             </td>
         </tr>
         <tr>
             <td colspan="2" align="center" bgcolor="#f2f6fc">
-                <p>&copy; 2024 UraLeb - All rights reserved.</p>
+                <p>&copy; 2024 UraLeb. All Rights Reserved.</p>
             </td>
         </tr>
     </table>
