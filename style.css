@@ -29,6 +29,7 @@ a {
 
 a:hover {
     text-decoration: underline;
+    color: #ffcc00;
 }
 
 ul {
@@ -63,4 +64,33 @@ img {
 marquee {
     font-size: 20px;
     font-weight: bold;
+}
+
+.flashed {
+    color: red;
+    animation: flashing 1s infinite;
+}
+
+@keyframes flashing {
+    0% { color: red; }
+    50% { color: yellow; }
+    100% { color: red; }
+}
+
+.image-hover:hover {
+    transform: scale(1.1);
+    transition: 0.3s ease;
+}
+
+.flashing-text {
+    animation: flash 1s step-end infinite alternate;
+}
+
+@keyframes flash {
+    0% {
+        color: yellow;
+    }
+    100% {
+        color: #ffcc00;
+    }
 }
