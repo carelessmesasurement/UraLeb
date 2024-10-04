@@ -1,114 +1,56 @@
 body {
-    font-family: "Verdana", sans-serif;
-    color: #2C3E50;
-    margin: 0;
-    padding: 0;
-    background-color: #F5F5F5;
+    font-family: Arial, sans-serif;
 }
 
 h1 {
-    color: #ffcc00;
-    font-size: 48px;
-    margin: 10px 0;
+    color: #2980B9;
+    text-align: center;
+    margin-top: 10px;
 }
 
 h2 {
-    color: #2980B9;
-    font-size: 32px;
+    color: #2C3E50;
 }
 
 h3 {
-    color: #27AE60;
-    font-size: 24px;
+    color: #3498DB;
 }
 
-a {
-    color: #2980B9;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-    color: #ffcc00;
-}
-
-ul {
-    list-style-type: disc;
-    margin-left: 20px;
-    font-size: 18px;
-}
-
-table {
-    border-collapse: collapse;
-    width: 100%;
-    background-color: #fff;
-    border: none;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-td {
-    padding: 20px;
-}
-
-p {
-    line-height: 1.8;
-    font-size: 18px;
-}
-
-img {
-    display: block;
-    margin: 10px auto;
-}
-
-marquee {
-    font-size: 20px;
-    font-weight: bold;
-}
-
-.flashed {
-    color: red;
-    animation: flashing 1s infinite;
-}
-
-@keyframes flashing {
-    0% { color: red; }
-    50% { color: yellow; }
-    100% { color: red; }
+.image-hover {
+    cursor: pointer;
+    transition: transform 0.2s;
 }
 
 .image-hover:hover {
-    transform: scale(1.1);
-    transition: 0.3s ease;
+    transform: scale(1.05);
 }
-
-.flashing-text {
-    animation: flash 1s step-end infinite alternate;
-}
-
-@keyframes flash {
-    0% {
-        color: yellow;
-    }
-    100% {
-        color: #ffcc00;
-    }
 
 .nav-button {
-    background-color: #2980B9;
+    background-color: #3498DB;
     color: white;
-    padding: 10px 20px;
-    margin: 10px 0;
     border: none;
+    border-radius: 5px;
+    padding: 10px;
     cursor: pointer;
-    font-size: 18px;
-    display: block;
-    width: 90%;
-    text-align: left;
+    width: 100%;
 }
 
 .nav-button:hover {
-    background-color: #1f6d9c;
+    background-color: #2980B9;
 }
 
+.content-section {
+    padding: 20px;
+    border: 1px solid #BDC3C7;
+    margin-top: 20px;
+    display: none; /* Initially hide all sections */
+}
+
+.flashing-text {
+    animation: flash 1s infinite;
+}
+
+@keyframes flash {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
 }
