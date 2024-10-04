@@ -291,142 +291,202 @@
                 
                     <h3>Power Plant SCADA Status</h3>
                     <div class="scada-dashboard">
-                        <div class="status-box" style="background-color: #f2f6fc;">
+                        <div class="status-box" id="plant-status-box">
                             <h4>Plant Status</h4>
                             <p id="plant-status"><strong>Operational</strong></p>
-                            <img src="https://via.placeholder.com/50" alt="Operational Icon" class="status-icon" />
-                            <div class="virtual-valve" onclick="toggleValve('plant-status')"></div>
+                            <img src="https://via.placeholder.com/30/555" alt="Operational Icon" class="status-icon" />
+                            <div class="virtual-valve" id="emergency-valve" onclick="toggleEmergencyShutoff()">
+                                <span class="valve-status" id="valve-status">Open</span>
+                                <span class="valve-label">Emergency Shutoff</span>
+                            </div>
+                            <div class="status-light" id="plant-status-light"></div>
                         </div>
-                        <div class="status-box" style="background-color: #e0f7fa;">
+                        
+                        <div class="gauge" id="temperature-gauge">
                             <h4>Temperature</h4>
-                            <p id="temperature"><strong>75°C</strong></p>
-                            <img src="https://via.placeholder.com/50" alt="Temperature Icon" class="status-icon" />
-                            <div class="virtual-valve" onclick="updateTemperature()"></div>
+                            <div class="gauge-container">
+                                <div class="gauge-fill" id="temperature-fill"></div>
+                                <div class="gauge-label" id="temperature"><strong>75°C</strong></div>
+                            </div>
                         </div>
-                        <div class="status-box" style="background-color: #ffe0b2;">
+                        
+                        <div class="gauge" id="pressure-gauge">
                             <h4>Pressure</h4>
-                            <p id="pressure"><strong>150 Bar</strong></p>
-                            <img src="https://via.placeholder.com/50" alt="Pressure Icon" class="status-icon" />
-                            <div class="virtual-valve" onclick="updatePressure()"></div>
+                            <div class="gauge-container">
+                                <div class="gauge-fill" id="pressure-fill"></div>
+                                <div class="gauge-label" id="pressure"><strong>150 Bar</strong></div>
+                            </div>
                         </div>
-                        <div class="status-box" style="background-color: #ffebee;">
+                        
+                        <div class="gauge" id="radiation-gauge">
                             <h4>Radiation Levels</h4>
-                            <p id="radiation-levels"><strong>0.1 µSv/h</strong></p>
-                            <img src="https://via.placeholder.com/50" alt="Radiation Icon" class="status-icon" />
-                            <div class="virtual-valve" onclick="updateRadiation()"></div>
+                            <div class="gauge-container">
+                                <div class="gauge-fill" id="radiation-fill"></div>
+                                <div class="gauge-label" id="radiation-levels"><strong>0.1 µSv/h</strong></div>
+                            </div>
                         </div>
-                        <div class="status-box" style="background-color: #d1c4e9;">
+                        
+                        <div class="gauge" id="energy-gauge">
                             <h4>Energy Output</h4>
-                            <p id="energy-output"><strong>100 MW</strong></p>
-                            <img src="https://via.placeholder.com/50" alt="Energy Icon" class="status-icon" />
-                            <div class="virtual-valve" onclick="updateEnergyOutput()"></div>
+                            <div class="gauge-container">
+                                <div class="gauge-fill" id="energy-fill"></div>
+                                <div class="gauge-label" id="energy-output"><strong>100 MW</strong></div>
+                            </div>
                         </div>
                     </div>
                 
+                    <div class="arrow-container">
+                        <div class="arrow" id="arrow1"></div>
+                        <div class="arrow" id="arrow2"></div>
+                        <div class="arrow" id="arrow3"></div>
+                        <div class="arrow" id="arrow4"></div>
+                    </div>
+                
                     <h3>SCADA Controls</h3>
-                    <button class="retro-button" onclick="toggleControl('control1')">Toggle Emergency Shutoff</button>
+                    <input type="password" id="password-input" placeholder="Enter Password" />
+                    <button class="retro-button" onclick="confirmEmergencyShutoff()">Toggle Emergency Shutoff</button>
                     <div id="control1" style="display:none;">
                         <p>Emergency shutoff is now <span id="control-status">OFF</span>.</p>
                     </div>
                 
-                    <button class="retro-button" onclick="toggleControl('control2')">Toggle Backup Generator</button>
+                    <button class="retro-button" onclick="toggleBackupGenerator()">Toggle Backup Generator</button>
                     <div id="control2" style="display:none;">
                         <p>Backup generator is now <span id="backup-status">OFF</span>.</p>
                     </div>
                 
                 <script>
-                    function toggleControl(controlID) {
-                        const control = document.getElementById(controlID);
-                        control.style.display = control.style.display === 'none' ? 'block' : 'none';
-                        
-                        if (controlID === 'control1') {
-                            const status = document.getElementById('control-status');
-                            status.textContent = status.textContent === 'OFF' ? 'ON' : 'OFF';
-                        } else if (controlID === 'control2') {
-                            const status = document.getElementById('backup-status');
-                            status.textContent = status.textContent === 'OFF' ? 'ON' : 'OFF';
+                    // Function to simulate gradual value changes
+                    function updateValues() {
+                        let tempValue = 75;
+                        let pressureValue = 150;
+                        let radValue = 0.1;
+                        let energyValue = 100;
+                
+                        setInterval(() => {
+                            tempValue += Math.random() > 0.5 ? 1 : -1;
+                            pressureValue += Math.random() > 0.5 ? 1 : -1;
+                            radValue += (Math.random() * 0.1).toFixed(2) * (Math.random() > 0.5 ? 1 : -1);
+                            energyValue += Math.random() > 0.5 ? 2 : -2;
+                
+                            document.getElementById('temperature').innerHTML = `<strong>${tempValue}°C</strong>`;
+                            document.getElementById('pressure').innerHTML = `<strong>${pressureValue} Bar</strong>`;
+                            document.getElementById('radiation-levels').innerHTML = `<strong>${radValue} µSv/h</strong>`;
+                            document.getElementById('energy-output').innerHTML = `<strong>${energyValue} MW</strong>`;
+                
+                            // Update gauge fill levels
+                            document.getElementById('temperature-fill').style.height = `${Math.min(tempValue / 1.5, 100)}%`;
+                            document.getElementById('pressure-fill').style.height = `${Math.min(pressureValue / 2, 100)}%`;
+                            document.getElementById('radiation-fill').style.height = `${Math.min(radValue * 100, 100)}%`;
+                            document.getElementById('energy-fill').style.height = `${Math.min(energyValue / 1.5, 100)}%`;
+                        }, 2000);
+                    }
+                
+                    // Function to confirm emergency shutoff
+                    function confirmEmergencyShutoff() {
+                        const password = document.getElementById('password-input').value;
+                        if (password === 'UraLeb2024') {
+                            const confirmed = confirm("Are you sure you want to toggle the Emergency Shutoff?");
+                            if (confirmed) {
+                                toggleEmergencyShutoff();
+                            }
+                        } else {
+                            alert("Incorrect password. Access denied.");
                         }
                     }
                 
-                    function toggleValve(statusID) {
-                        const status = document.getElementById(statusID);
-                        const newStatus = status.textContent === "Operational" ? "Shut Down" : "Operational";
-                        status.textContent = newStatus;
-                        alert(`Plant status changed to ${newStatus}`);
+                    // Function to toggle emergency shutoff
+                    function toggleEmergencyShutoff() {
+                        const valveStatus = document.getElementById('valve-status');
+                        valveStatus.innerHTML = valveStatus.innerHTML === 'Open' ? 'Closed' : 'Open';
+                        const status = document.getElementById('control-status');
+                        status.textContent = valveStatus.innerHTML === 'Closed' ? 'ON' : 'OFF';
+                
+                        // Blink status light
+                        blinkLight('plant-status-light');
                     }
                 
-                    function updateTemperature() {
+                    // Function to toggle backup generator with a delay
+                    function toggleBackupGenerator() {
                         setTimeout(() => {
-                            const temperature = Math.floor(Math.random() * 100) + 50; // Random temperature
-                            document.getElementById('temperature').textContent = `${temperature}°C`;
-                        }, 1500); // 1.5-second delay
+                            const backupStatus = document.getElementById('backup-status');
+                            backupStatus.innerHTML = backupStatus.innerHTML === 'OFF' ? 'ON' : 'OFF';
+                            const control2 = document.getElementById('control2');
+                            control2.style.display = 'block';
+                
+                            // Blink status light
+                            blinkLight('energy-light');
+                        }, 2000);
                     }
                 
-                    function updatePressure() {
+                    // Function to blink status light
+                    function blinkLight(lightId) {
+                        const light = document.getElementById(lightId);
+                        light.classList.add('blinking');
                         setTimeout(() => {
-                            const pressure = Math.floor(Math.random() * 100) + 100; // Random pressure
-                            document.getElementById('pressure').textContent = `${pressure} Bar`;
-                        }, 1500); // 1.5-second delay
+                            light.classList.remove('blinking');
+                        }, 500);
                     }
                 
-                    function updateRadiation() {
-                        setTimeout(() => {
-                            const radiation = (Math.random() * 2).toFixed(2); // Random radiation
-                            document.getElementById('radiation-levels').textContent = `${radiation} µSv/h`;
-                        }, 1500); // 1.5-second delay
-                    }
-                
-                    function updateEnergyOutput() {
-                        setTimeout(() => {
-                            const energy = Math.floor(Math.random() * 100) + 50; // Random energy output
-                            document.getElementById('energy-output').textContent = `${energy} MW`;
-                        }, 1500); // 1.5-second delay
-                    }
+                    // Initialize values
+                    updateValues();
                 </script>
                 
                 <style>
+                    body {
+                        background-color: #222;
+                        color: #ddd;
+                        font-family: 'Courier New', Courier, monospace;
+                    }
+                
                     .scada-dashboard {
                         display: grid;
-                        grid-template-columns: repeat(3, 1fr);
+                        grid-template-columns: repeat(2, 1fr);
                         gap: 20px;
                         margin-bottom: 20px;
+                        position: relative; /* Added for arrow positioning */
                     }
                 
-                    .status-box {
+                    .status-box, .gauge {
                         padding: 15px;
                         border-radius: 8px;
-                        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+                        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
                         text-align: center;
-                        transition: transform 0.3s, box-shadow 0.3s;
-                        position: relative; /* For positioning virtual valves */
+                        background-color: #333;
+                        position: relative;
+                        transition: transform 0.3s;
                     }
                 
-                    .status-box:hover {
+                    .status-box:hover, .gauge:hover {
                         transform: scale(1.05);
-                        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
                     }
                 
                     .status-icon {
                         margin-top: 10px;
-                        width: 50px; /* Adjust icon size */
+                        width: 30px; /* Adjust icon size */
                         height: auto;
                     }
                 
-                    .virtual-valve {
-                        width: 30px;
-                        height: 30px;
-                        background-color: #555;
-                        border-radius: 50%;
-                        position: absolute;
-                        right: 10px;
-                        bottom: 10px;
-                        cursor: pointer;
-                        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-                        transition: background-color 0.3s;
+                    .gauge-container {
+                        height: 100px;
+                        background-color: #444;
+                        border-radius: 5px;
+                        position: relative;
+                        overflow: hidden; /* Hide overflow for fill effect */
                     }
                 
-                    .virtual-valve:hover {
-                        background-color: #333;
+                    .gauge-fill {
+                        background-color: #00ff00; /* Green color for the fill */
+                        height: 0; /* Start with 0 height */
+                        transition: height 1s ease-in-out; /* Smooth transition */
+                        position: absolute;
+                        bottom: 0;
+                        width: 100%;
+                    }
+                
+                    .valve-label {
+                        display: block;
+                        margin-top: 5px;
+                        font-size: 0.8em;
                     }
                 
                     .retro-button {
@@ -437,12 +497,20 @@
                         border: none;
                         border-radius: 5px;
                         cursor: pointer;
-                        font-family: 'Courier New', Courier, monospace; /* Retro font style */
                         transition: background-color 0.3s;
                     }
                 
                     .retro-button:hover {
                         background-color: #3700b3;
+                    }
+                
+                    .arrow {
+                        width: 0; 
+                        height: 0; 
+                        border-left: 10px solid transparent;
+                        border-right: 10px solid transparent;
+                        border-bottom: 10px solid #fff;
+                        margin: 0 20px; /* Spacing between arrows */
                     }
                 </style>
             </div>
