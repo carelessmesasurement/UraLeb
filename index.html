@@ -32,11 +32,21 @@
             displaySection('welcome-section');
         }
     </script>
-    <script>
+       <script>
+        let currentSortColumn = null;
+        let currentSortOrder = 'asc';
+    
         function sortTable(columnIndex) {
             const table = document.getElementById("dataTable");
             const rows = Array.from(table.rows).slice(1); // Exclude the header row
-            const isAscending = table.rows[0].cells[columnIndex].classList.toggle("sorted-asc");
+    
+            // Determine if we're sorting in ascending or descending order
+            if (currentSortColumn === columnIndex) {
+                currentSortOrder = (currentSortOrder === 'asc') ? 'desc' : 'asc';
+            } else {
+                currentSortOrder = 'asc'; // Reset to ascending when a new column is sorted
+            }
+            currentSortColumn = columnIndex;
     
             // Sort rows based on the column index
             rows.sort((rowA, rowB) => {
@@ -44,11 +54,11 @@
                 const cellB = rowB.cells[columnIndex].innerText;
     
                 if (columnIndex === 0) { // Date column
-                    return isAscending 
+                    return currentSortOrder === 'asc' 
                         ? new Date(cellA) - new Date(cellB) 
                         : new Date(cellB) - new Date(cellA);
                 } else { // Severity and Description columns
-                    return isAscending 
+                    return currentSortOrder === 'asc' 
                         ? cellA.localeCompare(cellB) 
                         : cellB.localeCompare(cellA);
                 }
@@ -56,6 +66,15 @@
     
             // Remove existing rows and append sorted rows
             rows.forEach(row => table.appendChild(row));
+    
+            // Reset header styles
+            Array.from(table.querySelectorAll('th')).forEach(th => {
+                th.classList.remove('sorted-asc', 'sorted-desc');
+            });
+    
+            // Apply the sorted class to the current header
+            const currentHeader = table.rows[0].cells[columnIndex];
+            currentHeader.classList.add(currentSortOrder === 'asc' ? 'sorted-asc' : 'sorted-desc');
         }
     </script>
 </head>
