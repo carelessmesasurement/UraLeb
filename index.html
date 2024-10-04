@@ -156,10 +156,86 @@
                 <div id="safety-section" class="content-section" style="display:none;">
                     <h2>Safety Protocols</h2>
                     <p>At UraLeb, safety is our number one priority. We have developed extensive protocols to ensure that uranium is handled securely and that research is conducted in compliance with international nuclear safety standards.</p>
-
+                
                     <h3>Emergency Response Plans</h3>
                     <p>Our emergency response plans are designed to minimize risk in the unlikely event of a nuclear incident. With trained personnel and state-of-the-art safety systems in place, we ensure that our operations are as safe as possible.</p>
+                
+                    <h3>Alert Types</h3>
+                    <p>UraLeb employs several alert systems to notify personnel of various situations. Here are some of the main alert types:</p>
+                    <ul>
+                        <li>
+                            <strong>Red Alert:</strong> An imminent threat requiring immediate action. 
+                            <audio controls>
+                                <source src="red-alert-sound.mp3" type="audio/mpeg">
+                                Your browser does not support the audio tag.
+                            </audio>
+                            <p>Sound Description: A loud, continuous siren, typically followed by an automated voice indicating the nature of the threat.</p>
+                        </li>
+                        <li>
+                            <strong>Yellow Alert:</strong> A warning indicating a potential issue that requires attention.
+                            <audio controls>
+                                <source src="yellow-alert-sound.mp3" type="audio/mpeg">
+                                Your browser does not support the audio tag.
+                            </audio>
+                            <p>Sound Description: A series of short beeps followed by a recorded message giving instructions.</p>
+                        </li>
+                        <li>
+                            <strong>Green Alert:</strong> All clear, indicating that previous issues have been resolved.
+                            <audio controls>
+                                <source src="green-alert-sound.mp3" type="audio/mpeg">
+                                Your browser does not support the audio tag.
+                            </audio>
+                            <p>Sound Description: A pleasant chime signaling that it is safe to resume normal operations.</p>
+                        </li>
+                    </ul>
+                
+                    <h3>Emergency Systems Overview</h3>
+                    <pre>
+                        [ALERT SYSTEM DIAGRAM]
+                        +-------------------+
+                        |                   |
+                        |   Emergency       |
+                        |   Notification    |
+                        |   Control Panel   |
+                        |                   |
+                        +--------+----------+
+                                 |
+                                 |
+                                 v
+                        +--------+----------+
+                        |                   |
+                        |   Alert Systems   |
+                        |                   |
+                        +-------------------+
+                    </pre>
+                
+                    <h3>Q&A on Safety Protocols</h3>
+                    <div class="faq">
+                        <h4>Q: What should I do during a Red Alert?</h4>
+                        <p>A: Immediately follow evacuation procedures and report to your designated assembly area. Stay calm and await further instructions.</p>
+                        
+                        <h4>Q: How are personnel trained for emergencies?</h4>
+                        <p>A: All personnel undergo rigorous training simulations and emergency response drills to prepare for various scenarios.</p>
+                
+                        <h4>Q: What is the purpose of the Yellow Alert?</h4>
+                        <p>A: A Yellow Alert indicates that while there is no immediate threat, vigilance is required. Staff should monitor the situation and remain alert for updates.</p>
+                
+                        <h4>Q: Are the alert sounds standardized?</h4>
+                        <p>A: Yes, the alert sounds are standardized and recognized by all personnel to ensure quick and accurate responses during emergencies.</p>
+                    </div>
+                
+                    <button onclick="toggleFAQ()">Show/Hide All Q&A</button>
                 </div>
+                
+                <script>
+                    // Function to toggle the visibility of Q&A section
+                    function toggleFAQ() {
+                        const faqs = document.querySelectorAll('.faq p');
+                        faqs.forEach(faq => {
+                            faq.style.display = faq.style.display === 'none' ? 'block' : 'none';
+                        });
+                    }
+                </script>
 
                 <div id="contact-section" class="content-section" style="display:none;">
                     <h2>Contact Us</h2>
