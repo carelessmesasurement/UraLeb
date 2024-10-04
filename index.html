@@ -32,6 +32,32 @@
             displaySection('welcome-section');
         }
     </script>
+    <script>
+        function sortTable(columnIndex) {
+            const table = document.getElementById("dataTable");
+            const rows = Array.from(table.rows).slice(1); // Exclude the header row
+            const isAscending = table.rows[0].cells[columnIndex].classList.toggle("sorted-asc");
+    
+            // Sort rows based on the column index
+            rows.sort((rowA, rowB) => {
+                const cellA = rowA.cells[columnIndex].innerText;
+                const cellB = rowB.cells[columnIndex].innerText;
+    
+                if (columnIndex === 0) { // Date column
+                    return isAscending 
+                        ? new Date(cellA) - new Date(cellB) 
+                        : new Date(cellB) - new Date(cellA);
+                } else { // Severity and Description columns
+                    return isAscending 
+                        ? cellA.localeCompare(cellB) 
+                        : cellB.localeCompare(cellA);
+                }
+            });
+    
+            // Remove existing rows and append sorted rows
+            rows.forEach(row => table.appendChild(row));
+        }
+    </script>
 </head>
 <body onload="displayWelcome()" background="background-tile.png">
 
@@ -156,98 +182,97 @@
                 <div id="faults-section" class="content-section" style="display:none;">
                     <h2>Factory Faults</h2>
                     <button onclick="displaySection('employee-section')" class="nav-button">Back</button>
-                           <table style="width: 100%; border-collapse: collapse;">
+                           <table id="dataTable">
                                 <thead>
                                     <tr>
-                                        <th style="border: 1px solid #BDC3C7; padding: 8px; background-color: #3498DB; color: white;">Date</th>
-                                        <th style="border: 1px solid #BDC3C7; padding: 8px; background-color: #3498DB; color: white;">Severity</th>
-                                        <th style="border: 1px solid #BDC3C7; padding: 8px; background-color: #3498DB; color: white;">Description</th>
+                                        <th onclick="sortTable(0)">Date</th>
+                                        <th onclick="sortTable(1)">Severity</th>
+                                        <th onclick="sortTable(2)">Description</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr style="background-color: #90EE90;"> <!-- Minor -->
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">01/10/2024</td>
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Minor</td>
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Low Pressure detected in reactor unit 3, requires monitoring.</td>
+                                    <tr style="background-color: #90EE90;">
+                                        <td>01/10/2024</td>
+                                        <td>Minor</td>
+                                        <td>Low Pressure detected in reactor unit 3, requires monitoring.</td>
                                     </tr>
-                                    <tr style="background-color: #FFB6C1;"> <!-- High -->
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">19/01/2025</td>
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">High</td>
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Contaminated sample results from reactor 1.</td>
+                                    <tr style="background-color: #FFB6C1;">
+                                        <td>19/01/2025</td>
+                                        <td>High</td>
+                                        <td>Contaminated sample results from reactor 1.</td>
                                     </tr>
-                                    <tr style="background-color: #FFFF99;"> <!-- Moderate -->
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">05/10/2024</td>
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Moderate</td>
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Overheating in reactor 2, precaution advised.</td>
+                                    <tr style="background-color: #FFFF99;">
+                                        <td>05/10/2024</td>
+                                        <td>Moderate</td>
+                                        <td>Overheating in reactor 2, precaution advised.</td>
                                     </tr>
-                                    <tr style="background-color: #FF4500;"> <!-- Critical -->
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">04/01/2025</td>
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Critical</td>
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Severe radiation leak detected, lockdown procedure initiated.</td>
+                                    <tr style="background-color: #FF4500;">
+                                        <td>04/01/2025</td>
+                                        <td>Critical</td>
+                                        <td>Severe radiation leak detected, lockdown procedure initiated.</td>
                                     </tr>
-                                    <tr style="background-color: #90EE90;"> <!-- Minor -->
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">10/10/2024</td>
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Minor</td>
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Routine check reveals slight vibrations in reactor unit 1.</td>
+                                    <tr style="background-color: #90EE90;">
+                                        <td>10/10/2024</td>
+                                        <td>Minor</td>
+                                        <td>Routine check reveals slight vibrations in reactor unit 1.</td>
                                     </tr>
-                                    <tr style="background-color: #FFFF99;"> <!-- Moderate -->
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">15/11/2024</td>
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Moderate</td>
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Power fluctuation detected in Unit 5.</td>
+                                    <tr style="background-color: #FFFF99;">
+                                        <td>15/11/2024</td>
+                                        <td>Moderate</td>
+                                        <td>Power fluctuation detected in Unit 5.</td>
                                     </tr>
-                                    <tr style="background-color: #FFB6C1;"> <!-- High -->
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">30/12/2024</td>
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">High</td>
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Integrity test failure on reactor 4, further analysis needed.</td>
+                                    <tr style="background-color: #FFB6C1;">
+                                        <td>30/12/2024</td>
+                                        <td>High</td>
+                                        <td>Integrity test failure on reactor 4, further analysis needed.</td>
                                     </tr>
-                                    <tr style="background-color: #90EE90;"> <!-- Minor -->
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">30/11/2024</td>
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Minor</td>
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Minor leak in waste management area, contained.</td>
+                                    <tr style="background-color: #90EE90;">
+                                        <td>30/11/2024</td>
+                                        <td>Minor</td>
+                                        <td>Minor leak in waste management area, contained.</td>
                                     </tr>
-                                    <tr style="background-color: #FF4500;"> <!-- Critical -->
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">25/11/2024</td>
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Critical</td>
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Cooling system failure reported in Reactor 3, emergency response activated.</td>
+                                    <tr style="background-color: #FF4500;">
+                                        <td>25/11/2024</td>
+                                        <td>Critical</td>
+                                        <td>Cooling system failure reported in Reactor 3, emergency response activated.</td>
                                     </tr>
-                                    <tr style="background-color: #FFFF99;"> <!-- Moderate -->
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">25/10/2024</td>
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Moderate</td>
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Increased humidity levels detected in storage area.</td>
+                                    <tr style="background-color: #FFFF99;">
+                                        <td>25/10/2024</td>
+                                        <td>Moderate</td>
+                                        <td>Increased humidity levels detected in storage area.</td>
                                     </tr>
-                                    <tr style="background-color: #90EE90;"> <!-- Minor -->
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">09/01/2025</td>
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Minor</td>
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Maintenance reminder for gas detection systems.</td>
+                                    <tr style="background-color: #90EE90;">
+                                        <td>09/01/2025</td>
+                                        <td>Minor</td>
+                                        <td>Maintenance reminder for gas detection systems.</td>
                                     </tr>
-                                    <tr style="background-color: #FFFF99;"> <!-- Moderate -->
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">03/02/2025</td>
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Moderate</td>
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Unscheduled maintenance required for emergency generator.</td>
+                                    <tr style="background-color: #FFFF99;">
+                                        <td>03/02/2025</td>
+                                        <td>Moderate</td>
+                                        <td>Unscheduled maintenance required for emergency generator.</td>
                                     </tr>
-                                    <tr style="background-color: #FFB6C1;"> <!-- High -->
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">08/02/2025</td>
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">High</td>
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Radiation sensor malfunction reported, immediate check needed.</td>
+                                    <tr style="background-color: #FFB6C1;">
+                                        <td>08/02/2025</td>
+                                        <td>High</td>
+                                        <td>Radiation sensor malfunction reported, immediate check needed.</td>
                                     </tr>
-                                    <tr style="background-color: #FF4500;"> <!-- Critical -->
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">15/12/2024</td>
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Critical</td>
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Reactor containment breach reported, evacuation initiated.</td>
+                                    <tr style="background-color: #FF4500;">
+                                        <td>15/12/2024</td>
+                                        <td>Critical</td>
+                                        <td>Reactor containment breach reported, evacuation initiated.</td>
                                     </tr>
-                                    <tr style="background-color: #90EE90;"> <!-- Minor -->
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">20/12/2024</td>
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Minor</td>
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Visual inspection required for turbine blade wear.</td>
+                                    <tr style="background-color: #90EE90;">
+                                        <td>20/12/2024</td>
+                                        <td>Minor</td>
+                                        <td>Visual inspection required for turbine blade wear.</td>
                                     </tr>
-                                    <tr style="background-color: #FFFF99;"> <!-- Moderate -->
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">14/01/2025</td>
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Moderate</td>
-                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Fluctuations in coolant flow observed.</td>
+                                    <tr style="background-color: #FFFF99;">
+                                        <td>14/01/2025</td>
+                                        <td>Moderate</td>
+                                        <td>Fluctuations in coolant flow observed.</td>
                                     </tr>
                                 </tbody>
                             </table>
-
                 </div>
             </td>
         </tr>
