@@ -5,14 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UraLeb - Uranium Research Center</title>
     <link rel="stylesheet" href="styles.css">
+    <script>
+        function displayWelcome() {
+            alert('Welcome to UraLeb, Lebanon’s Uranium Research Center!');
+        }
+
+        function playSound() {
+            var audio = new Audio('click-sound.mp3');
+            audio.play();
+        }
+    </script>
 </head>
-<body background="background-tile.png">
+<body onload="displayWelcome()" background="background-tile.png">
 
     <table width="100%" cellpadding="10" cellspacing="0" border="0">
         <tr>
-            <td colspan="2" align="center" bgcolor="#f5f9fc">
-                <img src="logo.png" alt="UraLeb Logo" width="150" height="50">
-                <h1>UraLeb - Uranium Research Center</h1>
+            <td colspan="2" align="center" bgcolor="#2C3E50">
+                <img src="logo.png" alt="UraLeb Logo" width="150" height="150">
+                <h1 class="flashing-text">UraLeb - Uranium Research Center</h1>
                 <p><i>Pioneering Nuclear Science in Lebanon</i></p>
             </td>
         </tr>
@@ -27,28 +37,65 @@
             <td width="25%" valign="top" bgcolor="#ECF0F1" style="border-right: 2px solid #BDC3C7;">
                 <h3>Navigation</h3>
                 <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">About UraLeb</a></li>
-                    <li><a href="#">Research</a></li>
-                    <li><a href="#">Safety Protocols</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="#" onclick="playSound()">Home</a></li>
+                    <li><a href="#" onclick="playSound()">About UraLeb</a></li>
+                    <li><a href="#" onclick="playSound()">Research</a></li>
+                    <li><a href="#" onclick="playSound()">Safety Protocols</a></li>
+                    <li><a href="#" onclick="playSound()">Contact</a></li>
                 </ul>
                 <h3>Visit Counter</h3>
                 <img src="hit-counter.gif" alt="Hit Counter">
             </td>
             <td width="75%" valign="top">
+                <!-- Main Content -->
                 <h2>Welcome to UraLeb</h2>
-                <p>Founded in 1995, UraLeb is Lebanon’s premier Uranium Research Center, focusing on nuclear science and uranium isotopes. We aim to harness the power of uranium to provide safe and sustainable energy solutions for the future. Our researchers are leaders in nuclear physics, safety protocols, and energy development.</p>
+                <p>Founded in 1995, UraLeb is Lebanon’s premier Uranium Research Center, focusing on nuclear science and uranium isotopes.</p>
 
                 <h3>Our Vision</h3>
-                <p>At UraLeb, we believe that nuclear energy is the key to a sustainable future. Our vision is to explore and develop advanced nuclear technologies while adhering to the highest safety standards.</p>
+                <p>At UraLeb, we believe that nuclear energy is the key to a sustainable future.</p>
 
                 <h3>Latest Research</h3>
                 <ul>
-                    <li><a href="#">Uranium-235: The Future of Nuclear Energy</a></li>
-                    <li><a href="#">Advanced Techniques in Isotope Separation</a></li>
-                    <li><a href="#">Nuclear Safety in a Changing World</a></li>
+                    <li><a href="#" onclick="alert('Uranium-235 Research Coming Soon!')">Uranium-235: The Future of Nuclear Energy</a></li>
+                    <li><a href="#" onclick="alert('Advanced Isotope Research in Progress!')">Advanced Techniques in Isotope Separation</a></li>
+                    <li><a href="#" onclick="alert('Nuclear Safety Updates!')">Nuclear Safety in a Changing World</a></li>
                 </ul>
+
+                <h2>History of UraLeb</h2>
+                <p>UraLeb began as a small team of nuclear researchers in the mid-90s. Our goal is to investigate the safe use of uranium for energy production.</p>
+
+                <h2>Research Areas</h2>
+                <p>Our work at UraLeb covers several core areas in nuclear research:</p>
+                <ul>
+                    <li><strong>Uranium Isotope Separation</strong>: Studying methods to separate uranium isotopes.</li>
+                    <li><strong>Safety Protocols</strong>: Researching the best practices for uranium handling.</li>
+                    <li><strong>Energy Development</strong>: Optimizing nuclear power use.</li>
+                </ul>
+
+                <h2>Our Team</h2>
+                <ul>
+                    <li><strong>Dr. Amal Haddad</strong>: Lead Nuclear Physicist</li>
+                    <li><strong>Prof. Samir Najjar</strong>: Head of Safety Research</li>
+                    <li><strong>Dr. Laila Moussa</strong>: Environmental Scientist</li>
+                </ul>
+
+                <h2>Publications</h2>
+                <ul>
+                    <li><a href="#">The Use of Uranium-235 in Energy Solutions</a></li>
+                    <li><a href="#">Safety Protocols for New Nuclear Facilities</a></li>
+                    <li><a href="#">The Impact of Uranium on Natural Resources</a></li>
+                </ul>
+
+                <h2>Gallery</h2>
+                <p>Take a look at our research facilities:</p>
+                <img src="facility1.jpg" alt="Research Facility 1" width="250" height="150" class="image-hover">
+                <img src="facility2.jpg" alt="Research Facility 2" width="250" height="150" class="image-hover">
+                <img src="event1.jpg" alt="Research Event" width="250" height="150" class="image-hover">
+
+                <h2>Contact Us</h2>
+                <p><strong>Address</strong>: UraLeb Headquarters, 123 Nuclear Science Road, Beirut, Lebanon</p>
+                <p><strong>Email</strong>: contact@uraleb.org</p>
+                <p><strong>Phone</strong>: +961 1 234 567</p>
 
                 <h3>Under Construction</h3>
                 <p><img src="under-construction.gif" alt="Under Construction"></p>
