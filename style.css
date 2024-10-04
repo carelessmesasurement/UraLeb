@@ -54,3 +54,49 @@ h3 {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.5; }
 }
+ul {
+    list-style-type: square; /* Different bullet style */
+    padding-left: 20px; /* Indentation for list */
+}
+
+.retro-button {
+    background-color: #2980B9;
+    color: #ffffff;
+    border: 2px solid #27AE60;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: "Courier New", monospace; /* Retro font */
+    font-size: 14px;
+    margin: 10px 0; /* Increased spacing between buttons */
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.retro-button:hover {
+    background-color: #27AE60;
+    transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+/* Audio player styles */
+audio {
+    display: block;
+    margin: 10px 0;
+    border: 2px solid #BDC3C7;
+    border-radius: 5px;
+    background-color: #ECF0F1;
+    width: 200px; /* Fixed width for audio player */
+    padding: 5px;
+}
+
+/* Q&A styling */
+.faq {
+    margin-top: 20px; /* Space above Q&A section */
+}
+
+.answer {
+    margin: 5px 0 15px 0;
+    padding: 10px;
+    border: 1px solid #BDC3C7;
+    background-color: #ECF0F1;
+    border-radius: 5px; /* Rounded corners for answers */
+}
