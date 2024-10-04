@@ -6,6 +6,19 @@
     <title>UraLeb - Uranium Research Center</title>
     <link rel="stylesheet" href="styles.css">
     <script>
+        function displaySection(sectionId) {
+            // Hide all sections first
+            var sections = document.querySelectorAll('.content-section');
+            sections.forEach(function(section) {
+                section.style.display = 'none';
+            });
+            // Show the specific section
+            document.getElementById(sectionId).style.display = 'block';
+        }
+
+        function displayWelcome() {
+            // Optionally display a welcome section on page load
+            displaySection('welcome-section');
         }
     </script>
 </head>
@@ -30,61 +43,44 @@
             <td width="25%" valign="top" bgcolor="#ECF0F1" style="border-right: 2px solid #BDC3C7;">
                 <h3>Navigation</h3>
                 <ul>
-                    <li><a href="#" onclick="playSound()">Home</a></li>
-                    <li><a href="#" onclick="playSound()">About UraLeb</a></li>
-                    <li><a href="#" onclick="playSound()">Research</a></li>
-                    <li><a href="#" onclick="playSound()">Safety Protocols</a></li>
-                    <li><a href="#" onclick="playSound()">Contact</a></li>
+                    <li><a onclick="displaySection('welcome-section')">Home</a></li>
+                    <li><a onclick="displaySection('about-section')">About UraLeb</a></li>
+                    <li><a onclick="displaySection('research-section')">Research</a></li>
+                    <li><a onclick="displaySection('safety-section')">Safety Protocols</a></li>
+                    <li><a onclick="displaySection('contact-section')">Contact</a></li>
                 </ul>
                 <h3>Visit Counter</h3>
                 <img src="hit-counter.gif" alt="Hit Counter">
             </td>
             <td width="75%" valign="top">
-                <!-- Main Content -->
-                <h2>Welcome to UraLeb</h2>
-                <p>Founded in 1995, UraLeb is Lebanon’s premier Uranium Research Center, focusing on nuclear science and uranium isotopes.</p>
+                <!-- Hidden Content Sections -->
+                <div id="welcome-section" class="content-section">
+                    <h2>Welcome to UraLeb</h2>
+                    <p>Founded in 1995, UraLeb is Lebanon’s premier Uranium Research Center, focusing on nuclear science and uranium isotopes.</p>
+                </div>
 
-                <h3>Our Vision</h3>
-                <p>At UraLeb, we believe that nuclear energy is the key to a sustainable future.</p>
+                <div id="about-section" class="content-section" style="display:none;">
+                    <h2>About UraLeb</h2>
+                    <p>UraLeb started as a small team dedicated to researching nuclear energy and isotopes, aiming to make sustainable advances in the energy sector.</p>
+                </div>
 
-                <h3>Latest Research</h3>
-                <ul>
-                    <li><a href="#" onclick="alert('Uranium-235 Research Coming Soon!')">Uranium-235: The Future of Nuclear Energy</a></li>
-                    <li><a href="#" onclick="alert('Advanced Isotope Research in Progress!')">Advanced Techniques in Isotope Separation</a></li>
-                    <li><a href="#" onclick="alert('Nuclear Safety Updates!')">Nuclear Safety in a Changing World</a></li>
-                </ul>
+                <div id="research-section" class="content-section" style="display:none;">
+                    <h2>Research</h2>
+                    <p>Our ongoing research includes uranium isotope separation, energy optimization, and nuclear safety protocols.</p>
+                </div>
 
-                <h2>History of UraLeb</h2>
-                <p>UraLeb began as a small team of nuclear researchers. Our goal is to investigate the safe use of uranium for energy production.</p>
+                <div id="safety-section" class="content-section" style="display:none;">
+                    <h2>Safety Protocols</h2>
+                    <p>Our safety protocols ensure that uranium is handled in a secure, controlled environment.</p>
+                </div>
 
-                <h2>Research Areas</h2>
-                <p>Our work at UraLeb covers several core areas in nuclear research:</p>
-                <ul>
-                    <li><strong>Uranium Isotope Separation</strong>: Studying methods to separate uranium isotopes.</li>
-                    <li><strong>Safety Protocols</strong>: Researching the best practices for uranium handling.</li>
-                    <li><strong>Energy Development</strong>: Optimizing nuclear power use.</li>
-                </ul>
+                <div id="contact-section" class="content-section" style="display:none;">
+                    <h2>Contact Us</h2>
+                    <p><strong>Address</strong>: UraLeb Headquarters, Beirut, Lebanon</p>
+                    <p><strong>Email</strong>: contact@uraleb.org</p>
+                    <p><strong>Phone</strong>: [Redacted]</p>
+                </div>
 
-                <h2>Publications</h2>
-                <ul>
-                    <li><a href="#">The Use of Uranium-235 in Energy Solutions</a></li>
-                    <li><a href="#">Safety Protocols for New Nuclear Facilities</a></li>
-                    <li><a href="#">The Impact of Uranium on Natural Resources</a></li>
-                </ul>
-
-                <h2>Gallery</h2>
-                <p>Take a look at our research facilities:</p>
-                <img src="facility1.jpg" alt="Research Facility 1" width="250" height="150" class="image-hover">
-                <img src="facility2.jpg" alt="Research Facility 2" width="250" height="150" class="image-hover">
-                <img src="event1.jpg" alt="Research Event" width="250" height="150" class="image-hover">
-
-                <h2>Contact Us</h2>
-                <p><strong>Address</strong>: UraLeb Headquarters, Beirut, Lebanon</p>
-                <p><strong>Email</strong>: contact@uraleb.org</p>
-                <p><strong>Phone</strong>: [Redacted]</p>
-
-                <h3>Under Construction</h3>
-                <p><img src="under-construction.gif" alt="Under Construction"></p>
             </td>
         </tr>
         <tr>
