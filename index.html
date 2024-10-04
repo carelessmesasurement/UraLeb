@@ -165,26 +165,20 @@
                     <ul>
                         <li>
                             <strong>Red Alert:</strong> An imminent threat requiring immediate action. 
-                            <audio controls>
-                                <source src="red-alert-sound.mp3" type="audio/mpeg">
-                                Your browser does not support the audio tag.
-                            </audio>
+                            <button class="retro-button" onclick="document.getElementById('red-alert').play()">Play Sound</button>
+                            <audio id="red-alert" src="red-alert-sound.mp3" preload="none"></audio>
                             <p>Sound Description: A loud, continuous siren, typically followed by an automated voice indicating the nature of the threat.</p>
                         </li>
                         <li>
                             <strong>Yellow Alert:</strong> A warning indicating a potential issue that requires attention.
-                            <audio controls>
-                                <source src="yellow-alert-sound.mp3" type="audio/mpeg">
-                                Your browser does not support the audio tag.
-                            </audio>
+                            <button class="retro-button" onclick="document.getElementById('yellow-alert').play()">Play Sound</button>
+                            <audio id="yellow-alert" src="yellow-alert-sound.mp3" preload="none"></audio>
                             <p>Sound Description: A series of short beeps followed by a recorded message giving instructions.</p>
                         </li>
                         <li>
                             <strong>Green Alert:</strong> All clear, indicating that previous issues have been resolved.
-                            <audio controls>
-                                <source src="green-alert-sound.mp3" type="audio/mpeg">
-                                Your browser does not support the audio tag.
-                            </audio>
+                            <button class="retro-button" onclick="document.getElementById('green-alert').play()">Play Sound</button>
+                            <audio id="green-alert" src="green-alert-sound.mp3" preload="none"></audio>
                             <p>Sound Description: A pleasant chime signaling that it is safe to resume normal operations.</p>
                         </li>
                     </ul>
@@ -211,29 +205,25 @@
                 
                     <h3>Q&A on Safety Protocols</h3>
                     <div class="faq">
-                        <h4>Q: What should I do during a Red Alert?</h4>
-                        <p>A: Immediately follow evacuation procedures and report to your designated assembly area. Stay calm and await further instructions.</p>
+                        <button class="retro-button" onclick="toggleAnswer('qa1')">Q: What should I do during a Red Alert?</button>
+                        <p id="qa1" style="display:none;">A: Immediately follow evacuation procedures and report to your designated assembly area. Stay calm and await further instructions.</p>
                         
-                        <h4>Q: How are personnel trained for emergencies?</h4>
-                        <p>A: All personnel undergo rigorous training simulations and emergency response drills to prepare for various scenarios.</p>
+                        <button class="retro-button" onclick="toggleAnswer('qa2')">Q: How are personnel trained for emergencies?</button>
+                        <p id="qa2" style="display:none;">A: All personnel undergo rigorous training simulations and emergency response drills to prepare for various scenarios.</p>
                 
-                        <h4>Q: What is the purpose of the Yellow Alert?</h4>
-                        <p>A: A Yellow Alert indicates that while there is no immediate threat, vigilance is required. Staff should monitor the situation and remain alert for updates.</p>
+                        <button class="retro-button" onclick="toggleAnswer('qa3')">Q: What is the purpose of the Yellow Alert?</button>
+                        <p id="qa3" style="display:none;">A: A Yellow Alert indicates that while there is no immediate threat, vigilance is required. Staff should monitor the situation and remain alert for updates.</p>
                 
-                        <h4>Q: Are the alert sounds standardized?</h4>
-                        <p>A: Yes, the alert sounds are standardized and recognized by all personnel to ensure quick and accurate responses during emergencies.</p>
+                        <button class="retro-button" onclick="toggleAnswer('qa4')">Q: Are the alert sounds standardized?</button>
+                        <p id="qa4" style="display:none;">A: Yes, the alert sounds are standardized and recognized by all personnel to ensure quick and accurate responses during emergencies.</p>
                     </div>
-                
-                    <button onclick="toggleFAQ()">Show/Hide All Q&A</button>
                 </div>
                 
                 <script>
-                    // Function to toggle the visibility of Q&A section
-                    function toggleFAQ() {
-                        const faqs = document.querySelectorAll('.faq p');
-                        faqs.forEach(faq => {
-                            faq.style.display = faq.style.display === 'none' ? 'block' : 'none';
-                        });
+                    // Function to toggle the visibility of individual Q&A answers
+                    function toggleAnswer(answerID) {
+                        const answer = document.getElementById(answerID);
+                        answer.style.display = answer.style.display === 'none' ? 'block' : 'none';
                     }
                 </script>
 
