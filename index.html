@@ -32,44 +32,44 @@
             displaySection('welcome-section');
         }
     </script>
-    <script>
-        function sortTable(columnIndex) {
-            const table = document.getElementById("dataTable");
-            const rows = Array.from(table.rows).slice(1); // Exclude the header row
-            const isAscending = table.rows[0].cells[columnIndex].classList.toggle("sorted-asc");
-    
-            // Define severity ranking
-            const severityRank = {
-                "Critical": 4,
-                "High": 3,
-                "Moderate": 2,
-                "Minor": 1
-            };
-    
-            // Sort rows based on the column index
-            rows.sort((rowA, rowB) => {
-                const cellA = rowA.cells[columnIndex].innerText;
-                const cellB = rowB.cells[columnIndex].innerText;
-    
-                if (columnIndex === 0) { // Date column
-                    return isAscending 
-                        ? new Date(cellA) - new Date(cellB) 
-                        : new Date(cellB) - new Date(cellA);
-                } else if (columnIndex === 1) { // Severity column
-                    return isAscending 
-                        ? severityRank[cellA] - severityRank[cellB] 
-                        : severityRank[cellB] - severityRank[cellA];
-                } else { // Description column
-                    return isAscending 
-                        ? cellA.localeCompare(cellB) 
-                        : cellB.localeCompare(cellA);
-                }
-            });
-    
-            // Remove existing rows and append sorted rows
-            rows.forEach(row => table.appendChild(row));
-        }
-    </script>
+<script>
+    function sortTable(columnIndex) {
+        const table = document.getElementById("dataTable");
+        const rows = Array.from(table.rows).slice(1); // Exclude the header row
+        const isAscending = table.rows[0].cells[columnIndex].classList.toggle("sorted-asc");
+
+        // Define severity ranking
+        const severityRank = {
+            "Critical": 4,
+            "High": 3,
+            "Moderate": 2,
+            "Minor": 1
+        };
+
+        // Sort rows based on the column index
+        rows.sort((rowA, rowB) => {
+            const cellA = rowA.cells[columnIndex].innerText;
+            const cellB = rowB.cells[columnIndex].innerText;
+
+            if (columnIndex === 0) { // Date column
+                const dateA = new Date(cellA.split('/').reverse().join('-')); // Convert to YYYY-MM-DD
+                const dateB = new Date(cellB.split('/').reverse().join('-'));
+                return isAscending ? dateA - dateB : dateB - dateA;
+            } else if (columnIndex === 1) { // Severity column
+                return isAscending 
+                    ? severityRank[cellA] - severityRank[cellB] 
+                    : severityRank[cellB] - severityRank[cellA];
+            } else { // Description column
+                return isAscending 
+                    ? cellA.localeCompare(cellB) 
+                    : cellB.localeCompare(cellA);
+            }
+        });
+
+        // Remove existing rows and append sorted rows
+        rows.forEach(row => table.appendChild(row));
+    }
+</script>
 </head>
 <body onload="displayWelcome()" background="background-tile.png">
 
