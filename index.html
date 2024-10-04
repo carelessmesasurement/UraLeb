@@ -6,6 +6,16 @@
     <title>UraLeb - Uranium Research Center</title>
     <link rel="stylesheet" href="styles.css">
     <script>
+        function checkPassword() {
+            var inputPassword = document.getElementById("password-input").value;
+            if (inputPassword === "UraLeb2024") {
+                document.getElementById("logs-section").style.display = 'block';
+                document.getElementById("password-section").style.display = 'none';
+            } else {
+                alert("Incorrect password. Try again.");
+            }
+        }
+
         function displaySection(sectionId) {
             // Hide all sections first
             var sections = document.querySelectorAll('.content-section');
@@ -17,7 +27,6 @@
         }
 
         function displayWelcome() {
-            // Optionally display a welcome section on page load
             displaySection('welcome-section');
         }
     </script>
@@ -29,7 +38,7 @@
             <td colspan="2" align="left" bgcolor="#f2f6fc">
                 <img src="logo.png" alt="UraLeb Logo" width="150" height="50">
                 <h1 class="flashing-text">UraLeb - Uranium Research Center</h1>
-                <p><i>Pioneering Nuclear Science in Lebanon</i></p>
+                <p><i>Pioneering Nuclear Science in Lebanon since 1995</i></p>
             </td>
         </tr>
         <tr>
@@ -42,13 +51,12 @@
         <tr>
             <td width="25%" valign="top" bgcolor="#ECF0F1" style="border-right: 2px solid #BDC3C7;">
                 <h3>Navigation</h3>
-                <ul>
-                    <li><a onclick="displaySection('welcome-section')">Home</a></li>
-                    <li><a onclick="displaySection('about-section')">About UraLeb</a></li>
-                    <li><a onclick="displaySection('research-section')">Research</a></li>
-                    <li><a onclick="displaySection('safety-section')">Safety Protocols</a></li>
-                    <li><a onclick="displaySection('contact-section')">Contact</a></li>
-                </ul>
+                <button onclick="displaySection('welcome-section')" class="nav-button">Home</button><br>
+                <button onclick="displaySection('about-section')" class="nav-button">About UraLeb</button><br>
+                <button onclick="displaySection('research-section')" class="nav-button">Research</button><br>
+                <button onclick="displaySection('safety-section')" class="nav-button">Safety Protocols</button><br>
+                <button onclick="displaySection('contact-section')" class="nav-button">Contact</button><br>
+                <button onclick="displaySection('password-section')" class="nav-button">Logs</button><br>
                 <h3>Visit Counter</h3>
                 <img src="hit-counter.gif" alt="Hit Counter">
             </td>
@@ -56,31 +64,70 @@
                 <!-- Hidden Content Sections -->
                 <div id="welcome-section" class="content-section">
                     <h2>Welcome to UraLeb</h2>
-                    <p>Founded in 1995, UraLeb is Lebanon’s premier Uranium Research Center, focusing on nuclear science and uranium isotopes.</p>
+                    <p>Founded in 1995, UraLeb is Lebanon’s premier Uranium Research Center, focusing on nuclear science, energy development, and isotope separation. We are committed to the peaceful and safe use of nuclear energy, advancing the boundaries of science in the Middle East. Our latest research breakthroughs have positioned UraLeb as a leading voice in uranium science.</p>
+                    
+                    <h3>Our Vision</h3>
+                    <p>At UraLeb, we believe that nuclear energy is the key to a sustainable future. With the world facing energy shortages, climate change, and the need for sustainable resources, our research into uranium isotopes provides a solution that is clean, efficient, and scalable.</p>
+
+                    <h3>Our Team</h3>
+                    <p>Our team consists of world-renowned scientists, engineers, and nuclear researchers. With decades of combined experience, we are pushing the envelope on uranium research in Lebanon and beyond.</p>
                 </div>
 
                 <div id="about-section" class="content-section" style="display:none;">
                     <h2>About UraLeb</h2>
-                    <p>UraLeb started as a small team dedicated to researching nuclear energy and isotopes, aiming to make sustainable advances in the energy sector.</p>
+                    <p>UraLeb began as a small initiative to explore nuclear energy solutions for Lebanon. Over the years, our team has grown to include some of the most talented nuclear scientists in the region. Our mission is to make uranium research safe, sustainable, and applicable to modern energy needs.</p>
+
+                    <h3>Our Facilities</h3>
+                    <p>UraLeb operates state-of-the-art facilities designed for advanced nuclear research. Located in Beirut, our headquarters include isotope labs, testing chambers, and safety centers where cutting-edge research is conducted.</p>
+                    <img src="facility1.jpg" alt="Research Facility 1" width="250" height="150" class="image-hover">
+                    <img src="facility2.jpg" alt="Research Facility 2" width="250" height="150" class="image-hover">
                 </div>
 
                 <div id="research-section" class="content-section" style="display:none;">
                     <h2>Research</h2>
-                    <p>Our ongoing research includes uranium isotope separation, energy optimization, and nuclear safety protocols.</p>
+                    <p>Our research focuses on three key areas:</p>
+                    <ul>
+                        <li><strong>Uranium Isotope Separation</strong>: Pioneering new techniques in separating uranium isotopes to improve energy output.</li>
+                        <li><strong>Nuclear Safety Protocols</strong>: Developing methods to ensure that uranium handling is done in the safest manner possible.</li>
+                        <li><strong>Energy Development</strong>: Optimizing nuclear reactors to use uranium more efficiently for energy production.</li>
+                    </ul>
+                    <h3>Latest Research Publications</h3>
+                    <ul>
+                        <li><a href="#">The Use of Uranium-235 in Energy Solutions</a></li>
+                        <li><a href="#">Safety Protocols for New Nuclear Facilities</a></li>
+                        <li><a href="#">The Impact of Uranium on Natural Resources</a></li>
+                    </ul>
                 </div>
 
                 <div id="safety-section" class="content-section" style="display:none;">
                     <h2>Safety Protocols</h2>
-                    <p>Our safety protocols ensure that uranium is handled in a secure, controlled environment.</p>
+                    <p>At UraLeb, safety is our number one priority. We have developed extensive protocols to ensure that uranium is handled securely and that research is conducted in compliance with international nuclear safety standards.</p>
+
+                    <h3>Emergency Response Plans</h3>
+                    <p>Our emergency response plans are designed to minimize risk in the unlikely event of a nuclear incident. With trained personnel and state-of-the-art safety systems in place, we ensure that our operations are as safe as possible.</p>
                 </div>
 
                 <div id="contact-section" class="content-section" style="display:none;">
                     <h2>Contact Us</h2>
+                    <p>If you would like to learn more about UraLeb or collaborate with our research teams, feel free to reach out:</p>
                     <p><strong>Address</strong>: UraLeb Headquarters, Beirut, Lebanon</p>
                     <p><strong>Email</strong>: contact@uraleb.org</p>
                     <p><strong>Phone</strong>: [Redacted]</p>
                 </div>
 
+                <div id="password-section" class="content-section" style="display:none;">
+                    <h2>Enter Password to Access Logs</h2>
+                    <p>Please enter the password to view the research logs:</p>
+                    <input type="password" id="password-input" placeholder="Enter password" style="padding: 5px; width: 200px;">
+                    <button onclick="checkPassword()" class="nav-button">Submit</button>
+                </div>
+
+                <div id="logs-section" class="content-section" style="display:none;">
+                    <h2>Research Logs</h2>
+                    <p><strong>Date:</strong> 12/08/2024 - <i>Uranium-235 experiments showed promising results, achieving a new breakthrough in isotope separation.</i></p>
+                    <p><strong>Date:</strong> 25/09/2024 - <i>Safety protocols updated following new insights from the international nuclear safety commission.</i></p>
+                    <p><strong>Date:</strong> 30/09/2024 - <i>Energy output from reactor simulations has increased by 15%, suggesting potential for higher efficiency.</i></p>
+                </div>
             </td>
         </tr>
         <tr>
