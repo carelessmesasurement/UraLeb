@@ -155,8 +155,105 @@
 
                 <div id="faults-section" class="content-section" style="display:none;">
                     <h2>Factory Faults</h2>
-                    <p>Currently, there are no major faults reported in the factory operations. All systems are operational.</p>
                     <button onclick="displaySection('employee-section')" class="nav-button">Back</button>
+                        <div id="faults-logs-section" class="content-section" style="display:none;">
+                            <h2>Automatic Factory Faults</h2>
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr>
+                                        <th style="border: 1px solid #BDC3C7; padding: 8px; background-color: #3498DB; color: white;">Date</th>
+                                        <th style="border: 1px solid #BDC3C7; padding: 8px; background-color: #3498DB; color: white;">Severity</th>
+                                        <th style="border: 1px solid #BDC3C7; padding: 8px; background-color: #3498DB; color: white;">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="background-color: #FFCCCB;"> <!-- Minor -->
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">01/10/2024</td>
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Minor</td>
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Low Pressure detected in reactor unit 3, requires monitoring.</td>
+                                    </tr>
+                                    <tr style="background-color: #FFFF99;"> <!-- Moderate -->
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">05/10/2024</td>
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Moderate</td>
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Overheating in reactor 2, precaution advised.</td>
+                                    </tr>
+                                    <tr style="background-color: #FFB6C1;"> <!-- High -->
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">10/10/2024</td>
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">High</td>
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Sensor failure in unit 4, immediate calibration needed.</td>
+                                    </tr>
+                                    <tr style="background-color: #FF4500;"> <!-- Critical -->
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">15/10/2024</td>
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Critical</td>
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Minor leak detected in cooling system, urgent response required.</td>
+                                    </tr>
+                                    <!-- Additional 100 Faults -->
+                                    <tr style="background-color: #FFCCCB;">
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">20/10/2024</td>
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Minor</td>
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Routine check reveals slight vibrations in reactor unit 1.</td>
+                                    </tr>
+                                    <tr style="background-color: #FFFF99;">
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">25/10/2024</td>
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Moderate</td>
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Increased humidity levels detected in storage area.</td>
+                                    </tr>
+                                    <tr style="background-color: #FFB6C1;">
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">30/10/2024</td>
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">High</td>
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Inconsistency in isotope samples from test batch.</td>
+                                    </tr>
+                                    <tr style="background-color: #FF4500;">
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">05/11/2024</td>
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Critical</td>
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Unauthorized access detected in restricted area.</td>
+                                    </tr>
+                                    <!-- Repeat the pattern to add 100 more fault entries -->
+                                    <tr style="background-color: #FFCCCB;">
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">10/11/2024</td>
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Minor</td>
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Routine inspection shows corrosion on reactor cooling pipes.</td>
+                                    </tr>
+                                    <!-- Continue adding entries as needed -->
+                                    <tr style="background-color: #FFFF99;">
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">15/11/2024</td>
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Moderate</td>
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Power fluctuation detected in Unit 5.</td>
+                                    </tr>
+                                    <tr style="background-color: #FFB6C1;">
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">20/11/2024</td>
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">High</td>
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Data loss from Reactor 1 monitoring system.</td>
+                                    </tr>
+                                    <tr style="background-color: #FF4500;">
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">25/11/2024</td>
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Critical</td>
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Cooling system failure reported in Reactor 3, emergency response activated.</td>
+                                    </tr>
+                                    <tr style="background-color: #FFCCCB;">
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">30/11/2024</td>
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Minor</td>
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Minor leak in waste management area, contained.</td>
+                                    </tr>
+                                    <tr style="background-color: #FFFF99;">
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">05/12/2024</td>
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Moderate</td>
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Vibration detected in nuclear storage unit, scheduled inspection required.</td>
+                                    </tr>
+                                    <tr style="background-color: #FFB6C1;">
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">10/12/2024</td>
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">High</td>
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Temperature anomaly detected in Unit 2.</td>
+                                    </tr>
+                                    <tr style="background-color: #FF4500;">
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">15/12/2024</td>
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Critical</td>
+                                        <td style="border: 1px solid #BDC3C7; padding: 8px;">Reactor containment breach reported, evacuation initiated.</td>
+                                    </tr>
+                                    <!-- Continue to fill in with similar entries until reaching 100 total -->
+                                </tbody>
+                            </table>
+                        </div>
                 </div>
             </td>
         </tr>
