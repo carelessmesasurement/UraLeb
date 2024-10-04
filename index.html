@@ -300,38 +300,47 @@
                                 <span class="valve-label">Emergency Shutoff</span>
                             </div>
                             <div class="status-light" id="plant-status-light"></div>
+                            <div class="gauge" id="plant-gauge"></div>
                         </div>
-                        
-                        <div class="gauge" id="temperature-gauge">
+                        <div class="status-box" id="temperature-box">
                             <h4>Temperature</h4>
-                            <div class="gauge-container">
-                                <div class="gauge-fill" id="temperature-fill"></div>
-                                <div class="gauge-label" id="temperature"><strong>75°C</strong></div>
+                            <p id="temperature"><strong>75°C</strong></p>
+                            <img src="https://via.placeholder.com/30/555" alt="Temperature Icon" class="status-icon" />
+                            <div class="virtual-valve" id="temperature-valve">
+                                <span class="valve-label">Temperature Control</span>
                             </div>
+                            <div class="status-light" id="temperature-light"></div>
+                            <div class="gauge" id="temperature-gauge"></div>
                         </div>
-                        
-                        <div class="gauge" id="pressure-gauge">
+                        <div class="status-box" id="pressure-box">
                             <h4>Pressure</h4>
-                            <div class="gauge-container">
-                                <div class="gauge-fill" id="pressure-fill"></div>
-                                <div class="gauge-label" id="pressure"><strong>150 Bar</strong></div>
+                            <p id="pressure"><strong>150 Bar</strong></p>
+                            <img src="https://via.placeholder.com/30/555" alt="Pressure Icon" class="status-icon" />
+                            <div class="virtual-valve" id="pressure-valve">
+                                <span class="valve-label">Pressure Control</span>
                             </div>
+                            <div class="status-light" id="pressure-light"></div>
+                            <div class="gauge" id="pressure-gauge"></div>
                         </div>
-                        
-                        <div class="gauge" id="radiation-gauge">
+                        <div class="status-box" id="radiation-box">
                             <h4>Radiation Levels</h4>
-                            <div class="gauge-container">
-                                <div class="gauge-fill" id="radiation-fill"></div>
-                                <div class="gauge-label" id="radiation-levels"><strong>0.1 µSv/h</strong></div>
+                            <p id="radiation-levels"><strong>0.1 µSv/h</strong></p>
+                            <img src="https://via.placeholder.com/30/555" alt="Radiation Icon" class="status-icon" />
+                            <div class="virtual-valve" id="radiation-valve">
+                                <span class="valve-label">Radiation Control</span>
                             </div>
+                            <div class="status-light" id="radiation-light"></div>
+                            <div class="gauge" id="radiation-gauge"></div>
                         </div>
-                        
-                        <div class="gauge" id="energy-gauge">
+                        <div class="status-box" id="energy-box">
                             <h4>Energy Output</h4>
-                            <div class="gauge-container">
-                                <div class="gauge-fill" id="energy-fill"></div>
-                                <div class="gauge-label" id="energy-output"><strong>100 MW</strong></div>
+                            <p id="energy-output"><strong>100 MW</strong></p>
+                            <img src="https://via.placeholder.com/30/555" alt="Energy Icon" class="status-icon" />
+                            <div class="virtual-valve" id="energy-valve">
+                                <span class="valve-label">Energy Control</span>
                             </div>
+                            <div class="status-light" id="energy-light"></div>
+                            <div class="gauge" id="energy-gauge"></div>
                         </div>
                     </div>
                 
@@ -353,10 +362,16 @@
                     <div id="control2" style="display:none;">
                         <p>Backup generator is now <span id="backup-status">OFF</span>.</p>
                     </div>
+                </div>
                 
                 <script>
                     // Function to simulate gradual value changes
                     function updateValues() {
+                        const temperature = document.getElementById('temperature');
+                        const pressure = document.getElementById('pressure');
+                        const radiation = document.getElementById('radiation-levels');
+                        const energy = document.getElementById('energy-output');
+                
                         let tempValue = 75;
                         let pressureValue = 150;
                         let radValue = 0.1;
@@ -368,16 +383,16 @@
                             radValue += (Math.random() * 0.1).toFixed(2) * (Math.random() > 0.5 ? 1 : -1);
                             energyValue += Math.random() > 0.5 ? 2 : -2;
                 
-                            document.getElementById('temperature').innerHTML = `<strong>${tempValue}°C</strong>`;
-                            document.getElementById('pressure').innerHTML = `<strong>${pressureValue} Bar</strong>`;
-                            document.getElementById('radiation-levels').innerHTML = `<strong>${radValue} µSv/h</strong>`;
-                            document.getElementById('energy-output').innerHTML = `<strong>${energyValue} MW</strong>`;
+                            temperature.innerHTML = `<strong>${tempValue}°C</strong>`;
+                            pressure.innerHTML = `<strong>${pressureValue} Bar</strong>`;
+                            radiation.innerHTML = `<strong>${radValue} µSv/h</strong>`;
+                            energy.innerHTML = `<strong>${energyValue} MW</strong>`;
                 
-                            // Update gauge fill levels
-                            document.getElementById('temperature-fill').style.height = `${Math.min(tempValue / 1.5, 100)}%`;
-                            document.getElementById('pressure-fill').style.height = `${Math.min(pressureValue / 2, 100)}%`;
-                            document.getElementById('radiation-fill').style.height = `${Math.min(radValue * 100, 100)}%`;
-                            document.getElementById('energy-fill').style.height = `${Math.min(energyValue / 1.5, 100)}%`;
+                            // Update gauges
+                            document.getElementById('temperature-gauge').style.width = `${tempValue}%`;
+                            document.getElementById('pressure-gauge').style.width = `${pressureValue}%`;
+                            document.getElementById('radiation-gauge').style.width = `${(radValue * 100).toFixed(2)}%`;
+                            document.getElementById('energy-gauge').style.width = `${energyValue}%`;
                         }, 2000);
                     }
                 
@@ -432,12 +447,6 @@
                 </script>
                 
                 <style>
-                    body {
-                        background-color: #222;
-                        color: #ddd;
-                        font-family: 'Courier New', Courier, monospace;
-                    }
-                
                     .scada-dashboard {
                         display: grid;
                         grid-template-columns: repeat(2, 1fr);
@@ -446,7 +455,7 @@
                         position: relative; /* Added for arrow positioning */
                     }
                 
-                    .status-box, .gauge {
+                    .status-box {
                         padding: 15px;
                         border-radius: 8px;
                         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -456,7 +465,7 @@
                         transition: transform 0.3s;
                     }
                 
-                    .status-box:hover, .gauge:hover {
+                    .status-box:hover {
                         transform: scale(1.05);
                     }
                 
@@ -466,44 +475,60 @@
                         height: auto;
                     }
                 
-                    .gauge-container {
-                        height: 100px;
-                        background-color: #444;
-                        border-radius: 5px;
-                        position: relative;
-                        overflow: hidden; /* Hide overflow for fill effect */
-                    }
-                
-                    .gauge-fill {
-                        background-color: #00ff00; /* Green color for the fill */
-                        height: 0; /* Start with 0 height */
-                        transition: height 1s ease-in-out; /* Smooth transition */
-                        position: absolute;
-                        bottom: 0;
-                        width: 100%;
-                    }
-                
-                    .valve-label {
-                        display: block;
-                        margin-top: 5px;
-                        font-size: 0.8em;
-                    }
-                
-                    .retro-button {
+                    .virtual-valve {
                         margin-top: 10px;
-                        padding: 10px 20px;
-                        background-color: #6200ea;
-                        color: white;
-                        border: none;
-                        border-radius: 5px;
+                        padding: 10px;
+                        border: 2px dashed #ff0;
                         cursor: pointer;
-                        transition: background-color 0.3s;
+                        position: relative;
                     }
                 
-                    .retro-button:hover {
-                        background-color: #3700b3;
+                    .valve-status {
+                        font-weight: bold;
+                        color: #ff0;
                     }
                 
+                    .gauge {
+                        width: 100%;
+                        height: 10px;
+                        background-color: #444;
+                        margin-top: 5px;
+                        border-radius: 5px;
+                        overflow: hidden;
+                    }
+                
+                    .gauge::after {
+                        content: '';
+                        display: block;
+                        height: 100%;
+                        width: 0;
+                        background-color: #0f0;
+                        transition: width 1s;
+                    }
+                
+                    /* New blinking status light styles */
+                    .status-light {
+                        width: 10px;
+                        height: 10px;
+                        background-color: #ff0000; /* Initial color */
+                        border-radius: 50%;
+                        position: absolute;
+                        top: 5px;
+                        right: 5px;
+                        animation: blink 1s infinite alternate;
+                    }
+                
+                    @keyframes blink {
+                        0% { opacity: 1; }
+                        100% { opacity: 0; }
+                    }
+                
+                    /* New blinking class */
+                    .blinking {
+                        animation: blink 0.5s infinite alternate;
+                    }
+                
+                    /* Arrows styles */
                     .arrow {
                         width: 0; 
                         height: 0; 
@@ -511,7 +536,16 @@
                         border-right: 10px solid transparent;
                         border-bottom: 10px solid #fff;
                         margin: 0 20px; /* Spacing between arrows */
+                        position: absolute;
+                        top: 50%; /* Center vertically */
+                        transform: translateY(-50%);
                     }
+                
+                    /* Positioning arrows */
+                    #arrow1 { top: 20%; left: 40%; }
+                    #arrow2 { top: 20%; left: 60%; }
+                    #arrow3 { top: 50%; left: 20%; }
+                    #arrow4 { top: 50%; left: 80%; }
                 </style>
             </div>
                 <div id="faults-section" class="content-section" style="display:none;">
