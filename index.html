@@ -17,6 +17,18 @@
                 document.getElementById("error-message").innerText = "Incorrect password. Try again.";
                 document.getElementById("error-message").style.display = 'block'; // Show error message
             }
+            
+            function checkFaultsPassword() {
+            var inputPassword = document.getElementById("password-input").value;
+            if (inputPassword === "UraLeb2024") {
+                document.getElementById("logs-section").style.display = 'block';
+                document.getElementById("faults-section").style.display = 'block';
+                document.getElementById("password-section").style.display = 'none';
+                document.getElementById("error-message").style.display = 'none'; // Hide error message
+            } else {
+                document.getElementById("error-message").innerText = "Incorrect password. Try again.";
+                document.getElementById("error-message").style.display = 'block'; // Show error message
+            }
         }
 
         function displaySection(sectionId) {
