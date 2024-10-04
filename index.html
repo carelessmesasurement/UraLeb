@@ -35,9 +35,21 @@
 <script>
     function sortTable(columnIndex) {
         const table = document.getElementById("dataTable");
+        const headerCells = table.rows[0].cells;
         const rows = Array.from(table.rows).slice(1); // Exclude the header row
-        const isAscending = table.rows[0].cells[columnIndex].classList.toggle("sorted-asc");
+        const isAscending = headerCells[columnIndex].classList.toggle("sorted-asc");
+        
+        // Remove previous sorting classes
+        Array.from(headerCells).forEach((cell, index) => {
+            if (index !== columnIndex) {
+                cell.classList.remove("sorted-asc", "sorted-desc", "active");
+            }
+        });
 
+        // Highlight the active header
+        headerCells[columnIndex].classList.toggle("active", true);
+        headerCells[columnIndex].classList.toggle("sorted-desc", !isAscending);
+        
         // Define severity ranking
         const severityRank = {
             "Critical": 4,
@@ -214,6 +226,16 @@
                             .sorted-desc {
                                 background-color: #A7C6ED; /* Light blue for descending sort */
                             }
+                            th.sorted-asc::after {
+                                content: ' 🔼'; /* Up arrow for ascending */
+                            }
+                            th.sorted-desc::after {
+                                content: ' 🔽'; /* Down arrow for descending */
+                            }
+                            th.active {
+                                background-color: #f0f0f0; /* Highlight the active column */
+                            }
+
                         </style>
                     <button onclick="displaySection('employee-section')" class="nav-button">Back</button>
                            <table id="dataTable">
