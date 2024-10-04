@@ -193,6 +193,28 @@
 
                 <div id="faults-section" class="content-section" style="display:none;">
                     <h2>Factory Faults</h2>
+                        <style>
+                            table {
+                                width: 100%;
+                                border-collapse: collapse;
+                            }
+                            th, td {
+                                border: 1px solid #BDC3C7;
+                                padding: 8px;
+                                text-align: left;
+                            }
+                            th {
+                                background-color: #3498DB;
+                                color: white;
+                                cursor: pointer; /* Change cursor to pointer on header */
+                            }
+                            .sorted-asc {
+                                background-color: #A7C6ED; /* Light blue for ascending sort */
+                            }
+                            .sorted-desc {
+                                background-color: #A7C6ED; /* Light blue for descending sort */
+                            }
+                        </style>
                     <button onclick="displaySection('employee-section')" class="nav-button">Back</button>
                            <table id="dataTable">
                                 <thead>
