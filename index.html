@@ -495,19 +495,21 @@
                         function toggleEmergencyShutoff() {
                             const valveStatus = document.getElementById('valve-status');
                             const status = document.getElementById('control-status');
-                            valveStatus.innerHTML = valveStatus.innerHTML === 'Open' ? 'Closed' : 'Open';
-                            status.textContent = valveStatus.innerHTML === 'Closed' ? 'ON' : 'OFF';
-                            blinkLight('plant-status-light');
-                    
-                            if (valveStatus.innerHTML === 'Inactive') {
+                            
+                            // Check if the plant is currently operational
+                            if (isPlantOperational) {
                                 isPlantOperational = false; // Turn off the plant
                                 gradualShutdown(); // Gradually decrease values
-                                valveStatus.innerHTML = 'Active';
+                                valveStatus.innerHTML = 'Closed';
+                                status.textContent = 'OFF'; // Update control status
                             } else {
                                 isPlantOperational = true; // Reactivate the plant
                                 gradualRestart(); // Gradually increase values
-                                valveStatus.innerHTML = 'Inactive';
+                                valveStatus.innerHTML = 'Open';
+                                status.textContent = 'ON'; // Update control status
                             }
+                            
+                            blinkLight('plant-status-light'); // Blink the status light
                         }
                         function blinkLight(lightId) {
                             const light = document.getElementById(lightId);
