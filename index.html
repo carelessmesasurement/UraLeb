@@ -345,7 +345,37 @@
                     </div>
                     
                     <script>
-                        function confirmEmergencyShutoff() {
+                        function updateValues() {
+                            const temperature = document.getElementById('temperature');
+                            const pressure = document.getElementById('pressure');
+                            const radiation = document.getElementById('radiation-levels');
+                            const energy = document.getElementById('energy-output');
+                        
+                            let tempValue = 75;
+                            let pressureValue = 150;
+                            let radValue = 0.1;
+                            let energyValue = 100;
+                        
+                            setInterval(() => {
+                                tempValue += Math.random() > 0.5 ? 1 : -1;
+                                pressureValue += Math.random() > 0.5 ? 1 : -1;
+                                radValue += (Math.random() * 0.1).toFixed(2) * (Math.random() > 0.5 ? 1 : -1);
+                                radValue = Math.max(0, parseFloat(radValue.toFixed(2))); // Cap at 0, round to 2 sigfigs
+                                energyValue += Math.random() > 0.5 ? 2 : -2;
+                        
+                                temperature.innerHTML = `<strong>${tempValue}°C</strong>`;
+                                pressure.innerHTML = `<strong>${pressureValue} Bar</strong>`;
+                                radiation.innerHTML = `<strong>${radValue} µSv/h</strong>`;
+                                energy.innerHTML = `<strong>${energyValue} MW</strong>`;
+                        
+                                // Update gauges
+                                document.getElementById('temperature-gauge').style.width = `${tempValue}%`;
+                                document.getElementById('pressure-gauge').style.width = `${(pressureValue / 2)}%`;
+                                document.getElementById('radiation-gauge').style.width = `${(radValue * 100).toFixed(2)}%`;
+                                document.getElementById('energy-gauge').style.width = `${(energyValue / 2)}%`;
+                            }, 2000);
+                        }
+                    function confirmEmergencyShutoff() {
                         const password = document.getElementById('password-input2').value;
                         const errorMessage = document.getElementById('error-message');
                         const btn = document.getElementById('emergency-shutoff-btn');
@@ -363,7 +393,6 @@
                             errorMessage.style.display = 'block';
                         }
                     }
-                    
                     // Function to confirm backup generator
                     function confirmBackupGenerator() {
                         const password = document.getElementById('password-input2').value;
