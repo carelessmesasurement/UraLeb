@@ -509,6 +509,13 @@
                                 valveStatus.innerHTML = 'Inactive';
                             }
                         }
+                        function blinkLight(lightId) {
+                            const light = document.getElementById(lightId);
+                            light.classList.add('blinking');
+                            setTimeout(() => {
+                                light.classList.remove('blinking');
+                            }, 500);
+                        }
                     
                         // Initialize values on page load
                         document.addEventListener('DOMContentLoaded', () => {
