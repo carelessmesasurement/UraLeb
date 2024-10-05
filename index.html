@@ -405,7 +405,7 @@
                     function drawClockHands(ctx, radius, hour, minute, second) {
                         // Hour hand
                         ctx.save();
-                        ctx.rotate((hour * Math.PI) / 6 + (minute * Math.PI) / 360);
+                        ctx.rotate(((hour + 3) * Math.PI) / 6 + (minute * Math.PI) / 360);
                         ctx.beginPath();
                         ctx.moveTo(0, 0);
                         ctx.lineTo(0, -radius * 0.5);
@@ -415,7 +415,7 @@
                 
                         // Minute hand
                         ctx.save();
-                        ctx.rotate((minute * Math.PI) / 30);
+                        ctx.rotate((minute + 15) * Math.PI) / 30);
                         ctx.beginPath();
                         ctx.moveTo(0, 0);
                         ctx.lineTo(0, -radius * 0.75);
@@ -425,7 +425,7 @@
                 
                         // Second hand
                         ctx.save();
-                        ctx.rotate((second * Math.PI) / 30);
+                        ctx.rotate(((second + 15) * Math.PI) / 30);
                         ctx.beginPath();
                         ctx.moveTo(0, 0);
                         ctx.lineTo(0, -radius * 0.9);
