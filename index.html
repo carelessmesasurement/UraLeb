@@ -542,6 +542,11 @@
                                 document.getElementById('pressure').innerHTML = `<strong>${pressureValue} Bar</strong>`;
                                 document.getElementById('radiation-levels').innerHTML = `<strong>${radValue} µSv/h</strong>`;
                                 document.getElementById('energy-output').innerHTML = `<strong>${energyValue} MW</strong>`;
+
+                                document.getElementById('temperature-gauge').style.width = `${tempValue}%`;
+                                document.getElementById('pressure-gauge').style.width = `${(pressureValue / 2)}%`;
+                                document.getElementById('radiation-gauge').style.width = `${(radValue * 100).toFixed(2)}%`;
+                                document.getElementById('energy-gauge').style.width = `${(energyValue / 2)}%`;
                     
                                 if (tempValue === 21 && pressureValue === 0 && radValue === '0.00' && energyValue === 0) {
                                     clearInterval(shutdownInterval); // Stop shutdown when all values reach minimum
@@ -570,6 +575,11 @@
                                 document.getElementById('pressure').innerHTML = `<strong>${pressureValue} Bar</strong>`;
                                 document.getElementById('radiation-levels').innerHTML = `<strong>${radValue} µSv/h</strong>`;
                                 document.getElementById('energy-output').innerHTML = `<strong>${energyValue} MW</strong>`;
+
+                                document.getElementById('temperature-gauge').style.width = `${tempValue}%`;
+                                document.getElementById('pressure-gauge').style.width = `${(pressureValue / 2)}%`;
+                                document.getElementById('radiation-gauge').style.width = `${(radValue * 100).toFixed(2)}%`;
+                                document.getElementById('energy-gauge').style.width = `${(energyValue / 2)}%`;
                                 
                     
                                 if (tempValue === originalTempValue && pressureValue === originalPressureValue && energyValue === originalEnergyValue) {
