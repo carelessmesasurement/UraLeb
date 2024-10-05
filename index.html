@@ -287,11 +287,6 @@
                         <div id="calendar-widget" class="widget calendar-widget">
                             <p id="calendar-date"></p>
                         </div>
-                
-                        <!-- Weather widget -->
-                        <div id="weather-widget" class="widget weather-widget">
-                            <p id="weather-info">Weather: Sunny, 25°C</p>
-                        </div>
                     </div>
                 </div>
                 
@@ -405,7 +400,7 @@
                         ctx.beginPath();
                         ctx.moveTo(0, 0);
                         ctx.lineTo(0, -radius * 0.5);
-                        ctx.lineWidth = 8;
+                        ctx.lineWidth = 5;
                         ctx.stroke();
                         ctx.restore();
                 
@@ -414,8 +409,8 @@
                         ctx.rotate((minute * Math.PI) / 30 + Math.PI / 2); // Offset by 90 degrees
                         ctx.beginPath();
                         ctx.moveTo(0, 0);
-                        ctx.lineTo(0, -radius * 0.75);
-                        ctx.lineWidth = 4;
+                        ctx.lineTo(0, -radius * 0.70);
+                        ctx.lineWidth = 3;
                         ctx.stroke();
                         ctx.restore();
                 
@@ -424,8 +419,8 @@
                         ctx.rotate((second * Math.PI) / 30 + Math.PI / 2); // Offset by 90 degrees
                         ctx.beginPath();
                         ctx.moveTo(0, 0);
-                        ctx.lineTo(0, -radius * 0.9);
-                        ctx.lineWidth = 2;
+                        ctx.lineTo(0, -radius * 0.75);
+                        ctx.lineWidth = 1;
                         ctx.strokeStyle = 'red';
                         ctx.stroke();
                         ctx.restore();
