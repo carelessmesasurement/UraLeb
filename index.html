@@ -332,16 +332,19 @@
                         </div>
                     </div>
                     
-                    <h3>SCADA Controls</h3>
-                    <input type="password" id="password-input2" placeholder="Enter Password" />
-                    <button class="retro-button" onclick="confirmEmergencyShutoff()">Toggle Emergency Shutoff</button>
-                    <div id="control1" style="display:none;">
-                        <p>Emergency shutoff is now <span id="control-status">OFF</span>.</p>
-                    </div>
-                    
-                    <button class="retro-button" onclick="confirmBackupGenerator()">Toggle Backup Generator</button>
-                    <div id="control2" style="display:none;">
-                        <p>Backup generator is now <span id="backup-status">OFF</span>.</p>
+                        <h3>SCADA Controls</h3>
+                        <input type="password" id="password-input2" placeholder="Enter Password" />
+                        <div id="error-message" style="color:red; display:none;">Incorrect password. Access denied.</div>
+                        
+                        <button class="retro-button" id="emergency-shutoff-btn" onclick="confirmEmergencyShutoff()">Toggle Emergency Shutoff</button>
+                        <div id="control1" style="display:none;">
+                            <p>Emergency shutoff is now <span id="control-status">OFF</span>.</p>
+                        </div>
+                        
+                        <button class="retro-button" id="backup-generator-btn" onclick="confirmBackupGenerator()">Toggle Backup Generator</button>
+                        <div id="control2" style="display:none;">
+                            <p>Backup generator is now <span id="backup-status">OFF</span>.</p>
+                        </div>
                     </div>
                     
                     <script>
