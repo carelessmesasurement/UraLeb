@@ -488,6 +488,7 @@
                     
                                 if (tempValue === originalTempValue && pressureValue === originalPressureValue && radValue === originalRadValue && energyValue === originalEnergyValue) {
                                     clearInterval(restartInterval); // Stop restart when all values reach target
+                                    isPlantOperational = true;
                                 }
                             }, 500); // Update every 500ms
                         }
@@ -500,12 +501,12 @@
                             if (isPlantOperational) {
                                 isPlantOperational = false; // Turn off the plant
                                 gradualShutdown(); // Gradually decrease values
-                                valveStatus.innerHTML = 'Closed';
+                                valveStatus.innerHTML = 'Active';
                                 status.textContent = 'OFF'; // Update control status
                             } else {
                                 isPlantOperational = true; // Reactivate the plant
                                 gradualRestart(); // Gradually increase values
-                                valveStatus.innerHTML = 'Open';
+                                valveStatus.innerHTML = 'Inactive';
                                 status.textContent = 'ON'; // Update control status
                             }
                             
