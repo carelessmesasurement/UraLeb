@@ -258,9 +258,56 @@
                     <div id="error-message" style="color: red; display: none;"></div>
                 </div>
 
+                <div id="loadingModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0, 0, 0, 0.7); z-index:1000; display:flex; justify-content:center; align-items:center;">
+                    <div style="background-color:white; padding:20px; border-radius:8px; text-align:center;">
+                        <h2 id="loadingText">Connecting...</h2>
+                        <div style="margin: 20px 0;">
+                            <div class="throbber" style="width: 100px; height: 10px; background: #f1f1f1; border-radius: 5px; position: relative; overflow: hidden;">
+                                <div class="bar" style="width: 0; height: 100%; background: #4CAF50; position: absolute; left: 0; animation: load 2s infinite;"></div>
+                            </div>
+                        </div>
+                        <button onclick="cancelLoading()" style="background-color: #f44336; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Cancel</button>
+                    </div>
+                </div>
+                
+                <!-- Throbber Animation -->
+                <style>
+                @keyframes load {
+                    0% { left: 0; width: 0; }
+                    50% { left: 0; width: 100%; }
+                    100% { left: 100%; width: 0; }
+                }
+                </style>
+                
+                <script>
+                // Show the loading modal
+                function showLoading() {
+                    document.getElementById('loadingModal').style.display = 'flex';
+                    document.getElementById('loadingText').textContent = 'Connecting...';
+                    setTimeout(() => {
+                        document.getElementById('loadingText').textContent = 'Retrieving data...';
+                    }, 2000); // After 2 seconds, switch to 'retrieving data'
+                }
+                
+                // Hide the loading modal (cancel)
+                function cancelLoading() {
+                    document.getElementById('loadingModal').style.display = 'none';
+                }
+                
+                // Fake function for displaying sections
+                function displaySection(sectionId) {
+                    showLoading(); // Show the loading screen
+                    setTimeout(() => {
+                        cancelLoading(); // Hide the loading screen after some time
+                        document.getElementById(sectionId).style.display = 'block'; // Show the section
+                    }, 4000); // Simulate a 4-second delay before showing the section
+                }
+                </script>
+                
+                <!-- Your existing content -->
                 <div id="employee-section" class="content-section" style="display:none;">
-                    <h2>Employee Hub</h2>
-                    <p>Welcome to the employee hub. Please select an option to proceed:</p>
+                    <h2>Employee Portal</h2>
+                    <p>Welcome to the portal. Please select an option to proceed:</p>
                     <button onclick="displaySection('logs-section')" class="nav-button">View Research Logs</button>
                     <button onclick="displaySection('faults-section')" class="nav-button">View Power Plant Faults</button>
                     <button onclick="displaySection('plant-section')" class="nav-button">Access remote Plant Plant controls</button>
