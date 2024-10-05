@@ -380,7 +380,7 @@
                         <div class="status-box" id="plant-status-box">
                             <h4>Plant Status</h4>
                             <p id="plant-status"><strong>Operational</strong></p>
-                            <img src="https://via.placeholder.com/30/555" alt="Operational Icon" class="status-icon" />
+                            <img src="nuclear-power.png" alt="Operational Icon" class="status-icon" />
                             <div class="virtual-valve" id="emergency-valve" onclick="confirmEmergencyShutoff()">
                                 <span class="valve-status" id="valve-status">Open</span>
                                 <span class="valve-label">Emergency Shutoff</span>
@@ -391,28 +391,28 @@
                         <div class="status-box" id="temperature-box">
                             <h4>Temperature</h4>
                             <p id="temperature"><strong>75°C</strong></p>
-                            <img src="https://via.placeholder.com/30/555" alt="Temperature Icon" class="status-icon" />
+                            <img src="temperature.png" alt="Temperature Icon" class="status-icon" />
                             <div class="status-light" id="temperature-light"></div>
                             <div class="gauge" id="temperature-gauge"></div>
                         </div>
                         <div class="status-box" id="pressure-box">
                             <h4>Pressure</h4>
                             <p id="pressure"><strong>150 Bar</strong></p>
-                            <img src="https://via.placeholder.com/30/555" alt="Pressure Icon" class="status-icon" />
+                            <img src="flexibility.png" alt="Pressure Icon" class="status-icon" />
                             <div class="status-light" id="pressure-light"></div>
                             <div class="gauge" id="pressure-gauge"></div>
                         </div>
                         <div class="status-box" id="radiation-box">
                             <h4>Radiation Levels</h4>
                             <p id="radiation-levels"><strong>0.10 µSv/h</strong></p>
-                            <img src="https://via.placeholder.com/30/555" alt="Radiation Icon" class="status-icon" />
+                            <img src="radiation.png" alt="Radiation Icon" class="status-icon" />
                             <div class="status-light" id="radiation-light"></div>
                             <div class="gauge" id="radiation-gauge"></div>
                         </div>
                         <div class="status-box" id="energy-box">
                             <h4>Energy Output</h4>
                             <p id="energy-output"><strong>100 MW</strong></p>
-                            <img src="https://via.placeholder.com/30/555" alt="Energy Icon" class="status-icon" />
+                            <img src="power-grid.png" alt="Energy Icon" class="status-icon" />
                             <div class="status-light" id="energy-light"></div>
                             <div class="gauge" id="energy-gauge"></div>
                         </div>
@@ -626,6 +626,7 @@
                         text-align: center;
                         background-color: #ecf0f1;
                         position: relative;
+                        outline: 5px solid black;
                     }
                 
                     .status-icon {
