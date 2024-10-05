@@ -288,7 +288,7 @@
                 <div id="plant-section" class="content-section" style="display:none;">
                     <h2>Employee Portal</h2>
                     <p>Welcome to the UraLeb Employee Portal. Here you can monitor the status of our power plant operations.</p>
-                
+                    
                     <h3>Power Plant SCADA Status</h3>
                     <div class="scada-dashboard">
                         <div class="status-box" id="plant-status-box">
@@ -306,9 +306,6 @@
                             <h4>Temperature</h4>
                             <p id="temperature"><strong>75°C</strong></p>
                             <img src="https://via.placeholder.com/30/555" alt="Temperature Icon" class="status-icon" />
-                            <div class="virtual-valve" id="temperature-valve">
-                                <span class="valve-label">Temperature Control</span>
-                            </div>
                             <div class="status-light" id="temperature-light"></div>
                             <div class="gauge" id="temperature-gauge"></div>
                         </div>
@@ -316,15 +313,12 @@
                             <h4>Pressure</h4>
                             <p id="pressure"><strong>150 Bar</strong></p>
                             <img src="https://via.placeholder.com/30/555" alt="Pressure Icon" class="status-icon" />
-                            <div class="virtual-valve" id="pressure-valve">
-                                <span class="valve-label">Pressure Control</span>
-                            </div>
                             <div class="status-light" id="pressure-light"></div>
                             <div class="gauge" id="pressure-gauge"></div>
                         </div>
                         <div class="status-box" id="radiation-box">
                             <h4>Radiation Levels</h4>
-                            <p id="radiation-levels"><strong>0.1 µSv/h</strong></p>
+                            <p id="radiation-levels"><strong>0.10 µSv/h</strong></p>
                             <img src="https://via.placeholder.com/30/555" alt="Radiation Icon" class="status-icon" />
                             <div class="status-light" id="radiation-light"></div>
                             <div class="gauge" id="radiation-gauge"></div>
@@ -338,123 +332,136 @@
                         </div>
                     </div>
                     
-                <h3>SCADA Controls</h3>
-                <input type="password" id="password-input2" placeholder="Enter Password" />
-                <div id="error-message" style="color:red; display:none;">Incorrect password. Access denied.</div>
-                
-                <button class="retro-button" id="emergency-shutoff-btn" onclick="confirmEmergencyShutoff()">Toggle Emergency Shutoff</button>
-                <div id="control1" style="display:none;">
-                    <p>Emergency shutoff is now <span id="control-status">OFF</span>.</p>
-                </div>
-                
-                <button class="retro-button" id="backup-generator-btn" onclick="confirmBackupGenerator()">Toggle Backup Generator</button>
-                <div id="control2" style="display:none;">
-                    <p>Backup generator is now <span id="backup-status">OFF</span>.</p>
-                </div>
-                
-                <script>
-                // Function to simulate gradual value changes
-                function updateValues() {
-                    const temperature = document.getElementById('temperature');
-                    const pressure = document.getElementById('pressure');
-                    const radiation = document.getElementById('radiation-levels');
-                    const energy = document.getElementById('energy-output');
-                
-                    let tempValue = 75;
-                    let pressureValue = 150;
-                    let radValue = 0.1;
-                    let energyValue = 100;
-                
-                    setInterval(() => {
-                        tempValue += Math.random() > 0.5 ? 1 : -1;
-                        pressureValue += Math.random() > 0.5 ? 1 : -1;
-                        radValue += (Math.random() * 0.1).toFixed(2) * (Math.random() > 0.5 ? 1 : -1);
-                        radValue = Math.max(0, parseFloat(radValue.toFixed(2))); // Cap at 0, round to 2 sigfigs
-                        energyValue += Math.random() > 0.5 ? 2 : -2;
-                
-                        temperature.innerHTML = `<strong>${tempValue}°C</strong>`;
-                        pressure.innerHTML = `<strong>${pressureValue} Bar</strong>`;
-                        radiation.innerHTML = `<strong>${radValue} µSv/h</strong>`;
-                        energy.innerHTML = `<strong>${energyValue} MW</strong>`;
-                
-                        // Update gauges
-                        document.getElementById('temperature-gauge').style.width = `${tempValue}%`;
-                        document.getElementById('pressure-gauge').style.width = `${(pressureValue / 2)}%`;
-                        document.getElementById('radiation-gauge').style.width = `${(radValue * 100).toFixed(2)}%`;
-                        document.getElementById('energy-gauge').style.width = `${(energyValue / 2)}%`;
-                    }, 2000);
-                }
-                
-                // Function to confirm emergency shutoff
-                function confirmEmergencyShutoff() {
-                    const password = document.getElementById('password-input2').value;
-                    const errorMessage = document.getElementById('error-message');
-                    const btn = document.getElementById('emergency-shutoff-btn');
+                    <h3>SCADA Controls</h3>
+                    <input type="password" id="password-input2" placeholder="Enter Password" />
+                    <button class="retro-button" onclick="confirmEmergencyShutoff()">Toggle Emergency Shutoff</button>
+                    <div id="control1" style="display:none;">
+                        <p>Emergency shutoff is now <span id="control-status">OFF</span>.</p>
+                    </div>
                     
-                    if (password === '1995') {
-                        errorMessage.style.display = 'none';
-                        btn.disabled = true;
-                        btn.textContent = "Sending...";
-                        setTimeout(() => {
-                            toggleEmergencyShutoff();
-                            btn.disabled = false;
-                            btn.textContent = "Toggle Emergency Shutoff";
-                        }, 2000); // Simulate delay
-                    } else {
-                        errorMessage.style.display = 'block';
-                    }
-                }
-                
-                // Function to confirm backup generator
-                function confirmBackupGenerator() {
-                    const password = document.getElementById('password-input2').value;
-                    const errorMessage = document.getElementById('error-message');
-                    const btn = document.getElementById('backup-generator-btn');
-                
-                    if (password === '1995') {
-                        errorMessage.style.display = 'none';
-                        btn.disabled = true;
-                        btn.textContent = "Sending...";
-                        setTimeout(() => {
-                            toggleBackupGenerator();
-                            btn.disabled = false;
-                            btn.textContent = "Toggle Backup Generator";
-                        }, 2000); // Simulate delay
-                    } else {
-                        errorMessage.style.display = 'block';
-                    }
-                }
-                
-                // Function to toggle emergency shutoff
-                function toggleEmergencyShutoff() {
-                    const valveStatus = document.getElementById('valve-status');
-                    valveStatus.innerHTML = valveStatus.innerHTML === 'Open' ? 'Closed' : 'Open';
-                    const status = document.getElementById('control-status');
-                    status.textContent = valveStatus.innerHTML === 'Closed' ? 'ON' : 'OFF';
-                    blinkLight('plant-status-light');
-                }
-                
-                // Function to toggle backup generator with a delay
-                function toggleBackupGenerator() {
-                    const backupStatus = document.getElementById('backup-status');
-                    backupStatus.innerHTML = backupStatus.innerHTML === 'OFF' ? 'ON' : 'OFF';
-                    const control2 = document.getElementById('control2');
-                    control2.style.display = 'block';
-                    blinkLight('energy-light');
-                }
-                
-                // Function to blink status light
-                function blinkLight(lightId) {
-                    const light = document.getElementById(lightId);
-                    light.classList.add('blinking');
-                    setTimeout(() => {
-                        light.classList.remove('blinking');
-                    }, 500);
-                }
-                
-                // Initialize values
-                updateValues();
-                </script>
+                    <button class="retro-button" onclick="confirmBackupGenerator()">Toggle Backup Generator</button>
+                    <div id="control2" style="display:none;">
+                        <p>Backup generator is now <span id="backup-status">OFF</span>.</p>
+                    </div>
+                    
+                    <script>
+                        let plantActive = true; // Flag to track plant status
+                        let originalValues = { temperature: 75, pressure: 150, radiation: 0.10, energy: 100 };
+                    
+                        function updateValues() {
+                            const temperature = document.getElementById('temperature');
+                            const pressure = document.getElementById('pressure');
+                            const radiation = document.getElementById('radiation-levels');
+                            const energy = document.getElementById('energy-output');
+                    
+                            let tempValue = originalValues.temperature;
+                            let pressureValue = originalValues.pressure;
+                            let radValue = originalValues.radiation;
+                            let energyValue = originalValues.energy;
+                    
+                            setInterval(() => {
+                                if (plantActive) {
+                                    // Apply random fluctuations when plant is active
+                                    tempValue += Math.random() > 0.5 ? 1 : -1;
+                                    pressureValue += Math.random() > 0.5 ? 1 : -1;
+                                    radValue += (Math.random() * 0.1).toFixed(2) * (Math.random() > 0.5 ? 1 : -1);
+                                    energyValue += Math.random() > 0.5 ? 2 : -2;
+                                }
+                    
+                                // Cap radiation value to be minimum of 0
+                                if (radValue < 0) radValue = 0;
+                    
+                                // Update UI
+                                temperature.innerHTML = `<strong>${tempValue}°C</strong>`;
+                                pressure.innerHTML = `<strong>${pressureValue} Bar</strong>`;
+                                radiation.innerHTML = `<strong>${radValue.toFixed(2)} µSv/h</strong>`;
+                                energy.innerHTML = `<strong>${energyValue} MW</strong>`;
+                    
+                                // Update gauges
+                                document.getElementById('temperature-gauge').style.width = `${tempValue}%`;
+                                document.getElementById('pressure-gauge').style.width = `${(pressureValue / 2)}%`;
+                                document.getElementById('radiation-gauge').style.width = `${(radValue * 100).toFixed(2)}%`;
+                                document.getElementById('energy-gauge').style.width = `${(energyValue / 2)}%`;
+                            }, 2000);
+                        }
+                    
+                        function confirmEmergencyShutoff() {
+                            const password = document.getElementById('password-input2').value;
+                            if (password === '1995') {
+                                document.getElementById('control-status').textContent = plantActive ? 'ON' : 'OFF';
+                                toggleEmergencyShutoff();
+                            } else {
+                                document.getElementById('password-input2').classList.add('error'); // Display error instead of alert
+                            }
+                        }
+                    
+                        function toggleEmergencyShutoff() {
+                            plantActive = !plantActive; // Toggle plant status
+                    
+                            if (!plantActive) {
+                                gradualDecrease(); // Start decreasing values
+                            } else {
+                                gradualIncrease(); // Reactivate and increase values
+                            }
+                    
+                            blinkLight('plant-status-light');
+                        }
+                    
+                        function gradualDecrease() {
+                            let tempValue = originalValues.temperature;
+                            let pressureValue = originalValues.pressure;
+                            let radValue = originalValues.radiation;
+                            let energyValue = originalValues.energy;
+                    
+                            let decreaseInterval = setInterval(() => {
+                                if (tempValue > 21) tempValue -= 0.5;
+                                if (pressureValue > 0) pressureValue -= 1;
+                                if (radValue > 0) radValue = Math.max(0, radValue - 0.01);
+                                if (energyValue > 0) energyValue -= 1;
+                    
+                                // Update UI
+                                document.getElementById('temperature').innerHTML = `<strong>${tempValue}°C</strong>`;
+                                document.getElementById('pressure').innerHTML = `<strong>${pressureValue} Bar</strong>`;
+                                document.getElementById('radiation-levels').innerHTML = `<strong>${radValue.toFixed(2)} µSv/h</strong>`;
+                                document.getElementById('energy-output').innerHTML = `<strong>${energyValue} MW</strong>`;
+                    
+                                if (tempValue <= 0 && pressureValue <= 0 && radValue <= 0 && energyValue <= 0) {
+                                    clearInterval(decreaseInterval); // Stop decreasing once all values reach 0
+                                }
+                            }, 1000); // Decrease values gradually every second
+                        }
+                    
+                        function gradualIncrease() {
+                    
+                            let increaseInterval = setInterval(() => {
+                                if (tempValue < originalValues.temperature) tempValue += 1;
+                                if (pressureValue < originalValues.pressure) pressureValue += 1;
+                                if (radValue < originalValues.radiation) radValue += 0.01;
+                                if (energyValue < originalValues.energy) energyValue += 1;
+                    
+                                // Update UI
+                                document.getElementById('temperature').innerHTML = `<strong>${tempValue}°C</strong>`;
+                                document.getElementById('pressure').innerHTML = `<strong>${pressureValue} Bar</strong>`;
+                                document.getElementById('radiation-levels').innerHTML = `<strong>${radValue.toFixed(2)} µSv/h</strong>`;
+                                document.getElementById('energy-output').innerHTML = `<strong>${energyValue} MW</strong>`;
+                    
+                                if (tempValue >= originalValues.temperature && pressureValue >= originalValues.pressure &&
+                                    radValue >= originalValues.radiation && energyValue >= originalValues.energy) {
+                                    clearInterval(increaseInterval); // Stop increasing once values reach original levels
+                                }
+                            }, 1000); // Increase values gradually every second
+                        }
+                    
+                        function blinkLight(lightId) {
+                            const light = document.getElementById(lightId);
+                            light.classList.add('blinking');
+                            setTimeout(() => {
+                                light.classList.remove('blinking');
+                            }, 3000);
+                        }
+                    
+                        updateValues(); // Start updating values on page load
+                    </script>
                                 
                 <style>
                     .scada-dashboard {
