@@ -295,7 +295,7 @@
                             <h4>Plant Status</h4>
                             <p id="plant-status"><strong>Operational</strong></p>
                             <img src="https://via.placeholder.com/30/555" alt="Operational Icon" class="status-icon" />
-                            <div class="virtual-valve" id="emergency-valve" onclick="toggleEmergencyShutoff()">
+                            <div class="virtual-valve" id="emergency-valve" onclick="confirmEmergencyShutoff()">
                                 <span class="valve-status" id="valve-status">Open</span>
                                 <span class="valve-label">Emergency Shutoff</span>
                             </div>
@@ -326,9 +326,6 @@
                             <h4>Radiation Levels</h4>
                             <p id="radiation-levels"><strong>0.1 µSv/h</strong></p>
                             <img src="https://via.placeholder.com/30/555" alt="Radiation Icon" class="status-icon" />
-                            <div class="virtual-valve" id="radiation-valve">
-                                <span class="valve-label">Radiation Control</span>
-                            </div>
                             <div class="status-light" id="radiation-light"></div>
                             <div class="gauge" id="radiation-gauge"></div>
                         </div>
@@ -336,9 +333,6 @@
                             <h4>Energy Output</h4>
                             <p id="energy-output"><strong>100 MW</strong></p>
                             <img src="https://via.placeholder.com/30/555" alt="Energy Icon" class="status-icon" />
-                            <div class="virtual-valve" id="energy-valve">
-                                <span class="valve-label">Energy Control</span>
-                            </div>
                             <div class="status-light" id="energy-light"></div>
                             <div class="gauge" id="energy-gauge"></div>
                         </div>
@@ -351,7 +345,7 @@
                         <p>Emergency shutoff is now <span id="control-status">OFF</span>.</p>
                     </div>
                 
-                    <button class="retro-button" onclick="toggleBackupGenerator()">Toggle Backup Generator</button>
+                    <button class="retro-button" onclick="confirmBackupGenerator()">Toggle Backup Generator</button>
                     <div id="control2" style="display:none;">
                         <p>Backup generator is now <span id="backup-status">OFF</span>.</p>
                     </div>
@@ -401,9 +395,22 @@
                             alert("Incorrect password. Access denied.");
                         }
                     }
+                    
+                    function confirmBackupGenerator() {
+                        const password = document.getElementById('password-input').value;
+                        if (password === 'UraLeb') {
+                            const confirmed = confirm("Are you sure you want to toggle the Backup Generator?");
+                            if (confirmed) {
+                                toggleBackupGenerator();
+                            }
+                        } else {
+                            alert("Incorrect password. Access denied.");
+                        }
+                    }
                 
                     // Function to toggle emergency shutoff
                     function toggleEmergencyShutoff() {
+                        setTimeout(() => {
                         const valveStatus = document.getElementById('valve-status');
                         valveStatus.innerHTML = valveStatus.innerHTML === 'Open' ? 'Closed' : 'Open';
                         const status = document.getElementById('control-status');
@@ -442,7 +449,7 @@
                 <style>
                     .scada-dashboard {
                         display: grid;
-                        grid-template-columns: repeat(2, 1fr);
+                        grid-template-columns: repeat(3, 1fr);
                         gap: 20px;
                         margin-bottom: 20px;
                         position: relative; /* Added for arrow positioning */
