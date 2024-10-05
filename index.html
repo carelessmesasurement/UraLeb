@@ -484,7 +484,7 @@
                                 document.getElementById('radiation-levels').innerHTML = `<strong>${radValue} µSv/h</strong>`;
                                 document.getElementById('energy-output').innerHTML = `<strong>${energyValue} MW</strong>`;
                     
-                                if (tempValue === originalTempValue && pressureValue === originalPressureValue && radValue === originalRadValue && energyValue === originalEnergyValue) {
+                                if (tempValue === originalTempValue && pressureValue === originalPressureValue && energyValue === originalEnergyValue) {
                                     clearInterval(restartInterval); // Stop restart when all values reach target
                                 }
                             }, 500); // Update every 500ms
