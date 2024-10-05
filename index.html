@@ -344,13 +344,6 @@
                         </div>
                     </div>
                 
-                    <div class="arrow-container">
-                        <div class="arrow" id="arrow1"></div>
-                        <div class="arrow" id="arrow2"></div>
-                        <div class="arrow" id="arrow3"></div>
-                        <div class="arrow" id="arrow4"></div>
-                    </div>
-                
                     <h3>SCADA Controls</h3>
                     <input type="password" id="password-input" placeholder="Enter Password" />
                     <button class="retro-button" onclick="confirmEmergencyShutoff()">Toggle Emergency Shutoff</button>
@@ -390,16 +383,16 @@
                 
                             // Update gauges
                             document.getElementById('temperature-gauge').style.width = `${tempValue}%`;
-                            document.getElementById('pressure-gauge').style.width = `${pressureValue}%`;
+                            document.getElementById('pressure-gauge').style.width = `${(pressureValue / 2)}%`;
                             document.getElementById('radiation-gauge').style.width = `${(radValue * 100).toFixed(2)}%`;
-                            document.getElementById('energy-gauge').style.width = `${energyValue}%`;
+                            document.getElementById('energy-gauge').style.width = `${(energyValue / 2)}%`;
                         }, 2000);
                     }
                 
                     // Function to confirm emergency shutoff
                     function confirmEmergencyShutoff() {
                         const password = document.getElementById('password-input').value;
-                        if (password === 'UraLeb2024') {
+                        if (password === 'UraLeb') {
                             const confirmed = confirm("Are you sure you want to toggle the Emergency Shutoff?");
                             if (confirmed) {
                                 toggleEmergencyShutoff();
@@ -458,7 +451,7 @@
                     .status-box {
                         padding: 15px;
                         text-align: center;
-                        background-color: #8d9aa1;
+                        background-color: #ecf0f1;
                         position: relative;
                     }
                 
@@ -471,20 +464,20 @@
                     .virtual-valve {
                         margin-top: 10px;
                         padding: 10px;
-                        border: 2px dashed #ff0;
+                        border: 2px dashed #2980b9;
                         cursor: pointer;
                         position: relative;
                     }
                 
                     .valve-status {
                         font-weight: bold;
-                        color: #ff0;
+                        color: #2980b9;
                     }
                 
                     .gauge {
                         width: 25%;
                         height: 10px;
-                        background-color: #ff0;
+                        background-color: #2980b9;
                         margin-top: 5px;
                         overflow: hidden;
                     }
@@ -519,25 +512,6 @@
                     .blinking {
                         animation: blink 0.5s infinite alternate;
                     }
-                
-                    /* Arrows styles */
-                    .arrow {
-                        width: 0; 
-                        height: 0; 
-                        border-left: 10px solid transparent;
-                        border-right: 10px solid transparent;
-                        border-bottom: 10px solid #fff;
-                        margin: 0 20px; /* Spacing between arrows */
-                        position: absolute;
-                        top: 50%; /* Center vertically */
-                        transform: translateY(-50%);
-                    }
-                
-                    /* Positioning arrows */
-                    #arrow1 { top: 20%; left: 40%; }
-                    #arrow2 { top: 20%; left: 60%; }
-                    #arrow3 { top: 50%; left: 20%; }
-                    #arrow4 { top: 50%; left: 80%; }
                 </style>
             </div>
                 <div id="faults-section" class="content-section" style="display:none;">
