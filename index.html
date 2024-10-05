@@ -416,8 +416,9 @@
                         const status = document.getElementById('control-status');
                         status.textContent = valveStatus.innerHTML === 'Closed' ? 'ON' : 'OFF';
                 
-                        // Blink status light
-                        blinkLight('plant-status-light');
+                            // Blink status light
+                            blinkLight('plant-status-light');
+                        }, 2000);
                     }
                 
                     // Function to toggle backup generator with a delay
