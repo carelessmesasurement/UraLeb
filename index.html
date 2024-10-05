@@ -369,14 +369,12 @@
                             const energy = document.getElementById('energy-output');
                     
                             setInterval(() => {
-                                if (isPlantOperational) {
-                                    tempValue += Math.random() > 0.5 ? 1 : -1;
-                                    pressureValue += Math.random() > 0.5 ? 1 : -1;
-                                    radValue += (Math.random() * 0.1).toFixed(2) * (Math.random() > 0.5 ? 1 : -1);
-                                    energyValue += Math.random() > 0.5 ? 2 : -2;
-                    
-                                    radValue = Math.max(0, parseFloat(radValue.toFixed(2))); // Cap at 0
-                                }
+                                tempValue += Math.random() > 0.5 ? 1 : -1;
+                                pressureValue += Math.random() > 0.5 ? 1 : -1;
+                                radValue += (Math.random() * 0.1).toFixed(2) * (Math.random() > 0.5 ? 1 : -1);
+                                energyValue += Math.random() > 0.5 ? 2 : -2;
+                
+                                radValue = Math.max(0, parseFloat(radValue.toFixed(2))); // Cap at 0
                     
                                 // Update the displayed values
                                 temperature.innerHTML = `<strong>${tempValue}°C</strong>`;
@@ -488,7 +486,6 @@
                     
                                 if (tempValue === originalTempValue && pressureValue === originalPressureValue && radValue === originalRadValue && energyValue === originalEnergyValue) {
                                     clearInterval(restartInterval); // Stop restart when all values reach target
-                                    isPlantOperational = true;
                                 }
                             }, 500); // Update every 500ms
                         }
