@@ -471,7 +471,8 @@
                                 if (pressureValue < originalPressureValue) pressureValue += 1;
                                 if (radValue < originalRadValue) radValue = (parseFloat(radValue) + 0.01).toFixed(2);
                                 if (energyValue < originalEnergyValue) energyValue += 2;
-                    
+                                updateValues();
+                                
                                 // Cap values to avoid exceeding the original values
                                 tempValue = Math.min(tempValue, originalTempValue);
                                 pressureValue = Math.min(pressureValue, originalPressureValue);
@@ -483,7 +484,7 @@
                                 document.getElementById('pressure').innerHTML = `<strong>${pressureValue} Bar</strong>`;
                                 document.getElementById('radiation-levels').innerHTML = `<strong>${radValue} µSv/h</strong>`;
                                 document.getElementById('energy-output').innerHTML = `<strong>${energyValue} MW</strong>`;
-                                updateValues();
+                                
                     
                                 if (tempValue === originalTempValue && pressureValue === originalPressureValue && energyValue === originalEnergyValue) {
                                     clearInterval(restartInterval); // Stop restart when all values reach target
