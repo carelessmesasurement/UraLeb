@@ -432,7 +432,95 @@
                             <p>Backup generator is now <span id="backup-status">OFF</span>.</p>
                         </div>
                     </div>
+                    <div id="flowchart" class="flowchart-overlay" style="display:none;">
+                        <h2>Activation Flowchart</h2>
+                        <div class="flowchart-step" id="emergency-shutoff-step1">
+                            <button class="retro-button" id="access-btn1" onclick="confirmAccess('emergency')">Step 1: Confirm Access</button>
+                            <div id="access-status1" class="status-light"></div>
+                        </div>
+                        <div class="flowchart-step" id="emergency-shutoff-step2" style="display:none;">
+                            <button class="retro-button" id="initiate-shutoff-btn" onclick="initiateEmergencyShutoff()">Step 2: Initiate Emergency Shutoff</button>
+                            <div id="initiate-status" class="status-light"></div>
+                        </div>
+                        <div class="flowchart-step" id="emergency-shutoff-step3" style="display:none;">
+                            <p>Step 3: Verify Safety Checks</p>
+                            <div id="safety-status" class="status-light"></div>
+                        </div>
+                        <div class="flowchart-step" id="emergency-shutoff-step4" style="display:none;">
+                            <button class="retro-button" id="activate-shutoff-btn" onclick="activateEmergencyShutoff()">Step 4: Activate Emergency Shutoff</button>
+                            <div id="activation-status" class="status-light"></div>
+                        </div>
                     
+                        <div class="flowchart-step" id="backup-generator-step1">
+                            <button class="retro-button" id="access-btn2" onclick="confirmAccess('backup')">Step 1: Confirm Access</button>
+                            <div id="access-status2" class="status-light"></div>
+                        </div>
+                        <div class="flowchart-step" id="backup-generator-step2" style="display:none;">
+                            <button class="retro-button" id="initiate-gen-btn" onclick="initiateBackupGenerator()">Step 2: Initiate Backup Generator</button>
+                            <div id="initiate-gen-status" class="status-light"></div>
+                        </div>
+                        <div class="flowchart-step" id="backup-generator-step3" style="display:none;">
+                            <p>Step 3: Check Power Levels</p>
+                            <div id="power-status" class="status-light"></div>
+                        </div>
+                        <div class="flowchart-step" id="backup-generator-step4" style="display:none;">
+                            <button class="retro-button" id="activate-gen-btn" onclick="activateBackupGenerator()">Step 4: Activate Backup Generator</button>
+                            <div id="gen-activation-status" class="status-light"></div>
+                        </div>
+                    </div>
+                    <script>
+                        let emergencyStep = 1;
+                        let backupStep = 1;
+                    
+                        function confirmAccess(type) {
+                            const password = document.getElementById('password-input2').value;
+                            const accessStatus = document.getElementById(type === 'emergency' ? 'access-status1' : 'access-status2');
+                    
+                            if (password === '1995') {
+                                accessStatus.style.backgroundColor = 'green'; // Change color to green
+                                if (type === 'emergency') {
+                                    emergencyStep++;
+                                    document.getElementById('emergency-shutoff-step2').style.display = 'block';
+                                } else {
+                                    backupStep++;
+                                    document.getElementById('backup-generator-step2').style.display = 'block';
+                                }
+                            } else {
+                                accessStatus.style.backgroundColor = 'red'; // Change color to red
+                                alert('Incorrect password. Access denied.');
+                            }
+                        }
+                    
+                        function initiateEmergencyShutoff() {
+                            const initiateStatus = document.getElementById('initiate-status');
+                            initiateStatus.style.backgroundColor = 'yellow'; // Change color to yellow
+                            initiateStatus.innerHTML = 'Initiated';
+                            emergencyStep++;
+                            document.getElementById('emergency-shutoff-step3').style.display = 'block';
+                        }
+                    
+                        function activateEmergencyShutoff() {
+                            const activationStatus = document.getElementById('activation-status');
+                            activationStatus.style.backgroundColor = 'green'; // Change color to green
+                            activationStatus.innerHTML = 'Shutoff Activated';
+                            // Call your existing toggleEmergencyShutoff() function here.
+                        }
+                    
+                        function initiateBackupGenerator() {
+                            const initiateGenStatus = document.getElementById('initiate-gen-status');
+                            initiateGenStatus.style.backgroundColor = 'yellow'; // Change color to yellow
+                            initiateGenStatus.innerHTML = 'Initiated';
+                            backupStep++;
+                            document.getElementById('backup-generator-step3').style.display = 'block';
+                        }
+                    
+                        function activateBackupGenerator() {
+                            const genActivationStatus = document.getElementById('gen-activation-status');
+                            genActivationStatus.style.backgroundColor = 'green'; // Change color to green
+                            genActivationStatus.innerHTML = 'Generator Activated';
+                            // Call your existing toggleBackupGenerator() function here.
+                        }
+                    </script>
                     <script>
                         let tempValue = 75;
                         let pressureValue = 150;
@@ -697,6 +785,48 @@
                     /* New blinking class */
                     .blinking {
                         animation: blink 0.5s infinite alternate;
+                    }
+                </style>
+                <style>
+                    .flowchart-overlay {
+                        background-color: rgba(0, 0, 0, 0.8);
+                        color: #fff;
+                        padding: 20px;
+                        border: 1px solid #ccc;
+                        box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5);
+                        position: fixed;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        z-index: 9999;
+                        width: 300px;
+                    }
+                
+                    .flowchart-step {
+                        margin-bottom: 15px;
+                    }
+                
+                    .status-light {
+                        width: 20px;
+                        height: 20px;
+                        border-radius: 50%;
+                        margin-left: 10px;
+                        display: inline-block;
+                        background-color: #ff0000; /* Default color */
+                    }
+                
+                    .retro-button {
+                        background-color: #2980b9;
+                        color: #fff;
+                        border: 2px solid #fff;
+                        padding: 10px;
+                        cursor: pointer;
+                        transition: background-color 0.3s;
+                    }
+                
+                    .retro-button:hover {
+                        background-color: #fff;
+                        color: #2980b9;
                     }
                 </style>
             </div>
