@@ -259,12 +259,154 @@
                 </div>
 
                 <div id="employee-section" class="content-section" style="display:none;">
-                    <h2>Employee Portal</h2>
-                    <p>Welcome to the portal. Please select an option to proceed:</p>
-                    <button onclick="showLoading('logs-section')" class="nav-button">View Research Logs</button>
-                    <button onclick="showLoading('faults-section')" class="nav-button">View Power Plant Faults</button>
-                    <button onclick="showLoading('plant-section')" class="nav-button">Access Remote Plant Controls</button>
+                    <!-- Large office image -->
+                    <div class="header-section">
+                        <img src="path/to/office-image.jpg" alt="Office Image" class="office-image">
+                    </div>
+                
+                    <!-- Sidebar widgets for clock, calendar, and weather -->
+                    <div class="sidebar-widgets">
+                        <!-- Analog clock widget -->
+                        <div id="clock-widget" class="widget clock-widget">
+                            <canvas id="analog-clock" width="120" height="120"></canvas>
+                        </div>
+                
+                        <!-- Calendar widget -->
+                        <div id="calendar-widget" class="widget calendar-widget">
+                            <p id="calendar-date"></p>
+                        </div>
+                
+                        <!-- Weather widget -->
+                        <div id="weather-widget" class="widget weather-widget">
+                            <p id="weather-info">Weather: Sunny, 25°C</p>
+                        </div>
+                    </div>
+                
+                    <!-- Main content section for buttons -->
+                    <div class="main-content">
+                        <h2>Employee Portal</h2>
+                        <p>Welcome to the portal. Please select an option to proceed:</p>
+                
+                        <div class="button-container">
+                            <button onclick="showLoading('logs-section')" class="nav-button">View Research Logs</button>
+                            <button onclick="showLoading('faults-section')" class="nav-button">View Power Plant Faults</button>
+                            <button onclick="showLoading('plant-section')" class="nav-button">Access Remote Plant Controls</button>
+                        </div>
+                    </div>
                 </div>
+                
+                <!-- CSS for layout and styling -->
+                <style>
+                    .content-section {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                    }
+                
+                    .header-section {
+                        width: 100%;
+                        text-align: center;
+                        margin-bottom: 20px;
+                    }
+                
+                    .office-image {
+                        width: 100%;
+                        height: auto;
+                        max-height: 250px;
+                    }
+                
+                    .sidebar-widgets {
+                        position: absolute;
+                        top: 20px;
+                        left: 20px;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 10px;
+                    }
+                
+                    .widget {
+                        background: #f0f0f0;
+                        padding: 10px;
+                        border: 1px solid #ccc;
+                        border-radius: 5px;
+                        text-align: center;
+                        font-family: 'Courier New', Courier, monospace;
+                    }
+                
+                    .main-content {
+                        text-align: center;
+                        margin-top: 20px;
+                    }
+                
+                    .button-container {
+                        display: flex;
+                        justify-content: center;
+                        gap: 15px;
+                        margin-top: 15px;
+                    }
+                </style>
+                
+                <!-- JavaScript for clock and calendar functionality -->
+                <script>
+                    function updateAnalogClock() {
+                        const canvas = document.getElementById('analog-clock');
+                        const ctx = canvas.getContext('2d');
+                        const radius = canvas.height / 2;
+                        ctx.translate(radius, radius);
+                        ctx.clearRect(-radius, -radius, canvas.width, canvas.height);
+                
+                        const now = new Date();
+                        const hour = now.getHours() % 12;
+                        const minute = now.getMinutes();
+                        const second = now.getSeconds();
+                
+                        drawClockFace(ctx, radius);
+                        drawClockHands(ctx, radius, hour, minute, second);
+                    }
+                
+                    function drawClockFace(ctx, radius) {
+                        ctx.beginPath();
+                        ctx.arc(0, 0, radius, 0, 2 * Math.PI);
+                        ctx.fillStyle = 'white';
+                        ctx.fill();
+                        ctx.lineWidth = 2;
+                        ctx.stroke();
+                    }
+                
+                    function drawClockHands(ctx, radius, hour, minute, second) {
+                        // Hour hand
+                        ctx.beginPath();
+                        ctx.moveTo(0, 0);
+                        ctx.lineTo(0, -radius * 0.5);
+                        ctx.lineWidth = 8;
+                        ctx.stroke();
+                
+                        // Minute hand
+                        ctx.beginPath();
+                        ctx.moveTo(0, 0);
+                        ctx.lineTo(0, -radius * 0.75);
+                        ctx.lineWidth = 4;
+                        ctx.stroke();
+                
+                        // Second hand
+                        ctx.beginPath();
+                        ctx.moveTo(0, 0);
+                        ctx.lineTo(0, -radius * 0.9);
+                        ctx.lineWidth = 2;
+                        ctx.strokeStyle = 'red';
+                        ctx.stroke();
+                    }
+                
+                    function updateCalendar() {
+                        const calendarElement = document.getElementById('calendar-date');
+                        const today = new Date();
+                        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                        calendarElement.textContent = today.toLocaleDateString(undefined, options);
+                    }
+                
+                    setInterval(updateAnalogClock, 1000);
+                    updateCalendar();
+                </script>
                 
                 <!-- Loading Window -->
                 <div id="loading-window" class="loading-window" style="display:none;">
