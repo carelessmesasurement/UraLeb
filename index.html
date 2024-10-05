@@ -264,84 +264,82 @@
                     <button onclick="showLoading('logs-section')" class="nav-button">View Research Logs</button>
                     <button onclick="showLoading('faults-section')" class="nav-button">View Power Plant Faults</button>
                     <button onclick="showLoading('plant-section')" class="nav-button">Access Remote Plant Controls</button>
-                
-                    <!-- Loading Window -->
-                    <div id="loading-window" class="loading-window" style="display:none;">
-                        <div class="loading-content">
-                            <p id="loading-message">Connecting...</p>
-                            <div class="throbber"></div>
-                            <button id="cancel-button" onclick="cancelLoading()">Cancel</button>
-                        </div>
-                    </div>
                 </div>
-                
-                <!-- CSS for Loading Window -->
-                <style>
-                    .loading-window {
-                        position: fixed;
-                        top: 50%;
-                        left: 50%;
-                        transform: translate(-50%, -50%);
-                        background-color: #f0f0f0;
-                        border: 2px solid #999;
-                        padding: 20px;
-                        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
-                        z-index: 1000;
-                        font-family: 'Courier New', monospace;
-                    }
-                    .loading-content {
-                        text-align: center;
-                    }
-                    .throbber {
-                        width: 20px;
-                        height: 20px;
-                        margin: 10px auto;
-                        border: 4px solid #999;
-                        border-top: 4px solid #333;
-                        border-radius: 50%;
-                        animation: spin 1s linear infinite;
-                    }
-                    @keyframes spin {
-                        0% { transform: rotate(0deg); }
-                        100% { transform: rotate(360deg); }
-                    }
-                    #cancel-button {
-                        margin-top: 10px;
-                        padding: 5px 10px;
-                        background-color: #ccc;
-                        border: 1px solid #999;
-                        cursor: pointer;
-                        font-family: 'Courier New', monospace;
-                    }
-                </style>
-                
-                <!-- JavaScript for Loading Functionality -->
-                <script>
-                    function showLoading(section) {
-                        const loadingWindow = document.getElementById('loading-window');
-                        loadingWindow.style.display = 'block';
-                
-                        // Change the message after a delay
+            
+            <!-- Loading Window -->
+            <div id="loading-window" class="loading-window" style="display:none;">
+                <p id="loading-text">Connecting...</p>
+                <div class="throbber">
+                    <div class="throbber-bar"></div>
+                </div>
+                <button id="cancel-btn" onclick="cancelLoading()">Cancel</button>
+            </div>
+            
+            <style>
+                .loading-window {
+                    background-color: #f0f0f0;
+                    border: 1px solid #ccc;
+                    padding: 10px;
+                    width: 300px;
+                    text-align: center;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    font-family: 'Courier New', Courier, monospace;
+                    font-size: 14px;
+                    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+                }
+            
+                .throbber {
+                    width: 100%;
+                    height: 10px;
+                    background-color: #ccc;
+                    margin: 10px 0;
+                    overflow: hidden;
+                    position: relative;
+                }
+            
+                .throbber-bar {
+                    width: 0;
+                    height: 100%;
+                    background-color: #4CAF50;
+                    animation: throbber-animation 2s linear infinite;
+                }
+            
+                @keyframes throbber-animation {
+                    0% { width: 0; }
+                    50% { width: 100%; }
+                    100% { width: 0; }
+                }
+            </style>
+            
+            <script>
+                function showLoading(sectionId) {
+                    // Show the loading window
+                    const loadingWindow = document.getElementById('loading-window');
+                    loadingWindow.style.display = 'block';
+            
+                    // Simulate loading process
+                    let loadingText = document.getElementById('loading-text');
+                    loadingText.innerText = "Connecting...";
+                    
+                    setTimeout(() => {
+                        loadingText.innerText = "Retrieving data...";
+                        // Simulate data retrieval delay
                         setTimeout(() => {
-                            document.getElementById('loading-message').innerText = 'Retrieving data...';
-                            // Simulate data retrieval
-                            setTimeout(() => {
-                                loadingWindow.style.display = 'none'; // Close loading window
-                                displaySection(section); // Display the selected section
-                            }, 2000); // Simulate data retrieval time
-                        }, 2000); // Time before changing message
-                    }
-                
-                    function cancelLoading() {
-                        const loadingWindow = document.getElementById('loading-window');
-                        loadingWindow.style.display = 'none'; // Close loading window
-                    }
-                
-                    function displaySection(section) {
-                        // Your existing code to display the relevant section
-                        console.log(`Displaying section: ${section}`);
-                    }
-                </script>
+                            // Hide loading window after data retrieval
+                            loadingWindow.style.display = 'none';
+                            displaySection(sectionId); // Call function to display the selected section
+                        }, 2000); // Simulated data retrieval delay
+                    }, 2000); // Simulated connection delay
+                }
+            
+                function cancelLoading() {
+                    const loadingWindow = document.getElementById('loading-window');
+                    loadingWindow.style.display = 'none'; // Hide the loading window immediately
+                }
+            </script>
 
                 <div id="logs-section" class="content-section" style="display:none;">
                     <h2>Research Logs</h2>
