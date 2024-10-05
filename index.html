@@ -337,116 +337,125 @@
                             <div class="gauge" id="energy-gauge"></div>
                         </div>
                     </div>
+                    
+                <h3>SCADA Controls</h3>
+                <input type="password" id="password-input2" placeholder="Enter Password" />
+                <div id="error-message" style="color:red; display:none;">Incorrect password. Access denied.</div>
                 
-                    <h3>SCADA Controls</h3>
-                    <input type="password" id="password-input2" placeholder="Enter Password" />
-                    <button class="retro-button" onclick="confirmEmergencyShutoff()">Toggle Emergency Shutoff</button>
-                    <div id="control1" style="display:none;">
-                        <p>Emergency shutoff is now <span id="control-status">OFF</span>.</p>
-                    </div>
+                <button class="retro-button" id="emergency-shutoff-btn" onclick="confirmEmergencyShutoff()">Toggle Emergency Shutoff</button>
+                <div id="control1" style="display:none;">
+                    <p>Emergency shutoff is now <span id="control-status">OFF</span>.</p>
+                </div>
                 
-                    <button class="retro-button" onclick="confirmBackupGenerator()">Toggle Backup Generator</button>
-                    <div id="control2" style="display:none;">
-                        <p>Backup generator is now <span id="backup-status">OFF</span>.</p>
-                    </div>
+                <button class="retro-button" id="backup-generator-btn" onclick="confirmBackupGenerator()">Toggle Backup Generator</button>
+                <div id="control2" style="display:none;">
+                    <p>Backup generator is now <span id="backup-status">OFF</span>.</p>
                 </div>
                 
                 <script>
-                    // Function to simulate gradual value changes
-                    function updateValues() {
-                        const temperature = document.getElementById('temperature');
-                        const pressure = document.getElementById('pressure');
-                        const radiation = document.getElementById('radiation-levels');
-                        const energy = document.getElementById('energy-output');
+                // Function to simulate gradual value changes
+                function updateValues() {
+                    const temperature = document.getElementById('temperature');
+                    const pressure = document.getElementById('pressure');
+                    const radiation = document.getElementById('radiation-levels');
+                    const energy = document.getElementById('energy-output');
                 
-                        let tempValue = 75;
-                        let pressureValue = 150;
-                        let radValue = 0.1;
-                        let energyValue = 100;
+                    let tempValue = 75;
+                    let pressureValue = 150;
+                    let radValue = 0.1;
+                    let energyValue = 100;
                 
-                        setInterval(() => {
-                            tempValue += Math.random() > 0.5 ? 1 : -1;
-                            pressureValue += Math.random() > 0.5 ? 1 : -1;
-                            radValue += (Math.random() * 0.1).toFixed(2) * (Math.random() > 0.5 ? 1 : -1);
-                            energyValue += Math.random() > 0.5 ? 2 : -2;
+                    setInterval(() => {
+                        tempValue += Math.random() > 0.5 ? 1 : -1;
+                        pressureValue += Math.random() > 0.5 ? 1 : -1;
+                        radValue += (Math.random() * 0.1).toFixed(2) * (Math.random() > 0.5 ? 1 : -1);
+                        radValue = Math.max(0, parseFloat(radValue.toFixed(2))); // Cap at 0, round to 2 sigfigs
+                        energyValue += Math.random() > 0.5 ? 2 : -2;
                 
-                            temperature.innerHTML = `<strong>${tempValue}°C</strong>`;
-                            pressure.innerHTML = `<strong>${pressureValue} Bar</strong>`;
-                            radiation.innerHTML = `<strong>${radValue} µSv/h</strong>`;
-                            energy.innerHTML = `<strong>${energyValue} MW</strong>`;
+                        temperature.innerHTML = `<strong>${tempValue}°C</strong>`;
+                        pressure.innerHTML = `<strong>${pressureValue} Bar</strong>`;
+                        radiation.innerHTML = `<strong>${radValue} µSv/h</strong>`;
+                        energy.innerHTML = `<strong>${energyValue} MW</strong>`;
                 
-                            // Update gauges
-                            document.getElementById('temperature-gauge').style.width = `${tempValue}%`;
-                            document.getElementById('pressure-gauge').style.width = `${(pressureValue / 2)}%`;
-                            document.getElementById('radiation-gauge').style.width = `${(radValue * 100).toFixed(2)}%`;
-                            document.getElementById('energy-gauge').style.width = `${(energyValue / 2)}%`;
-                        }, 2000);
-                    }
+                        // Update gauges
+                        document.getElementById('temperature-gauge').style.width = `${tempValue}%`;
+                        document.getElementById('pressure-gauge').style.width = `${(pressureValue / 2)}%`;
+                        document.getElementById('radiation-gauge').style.width = `${(radValue * 100).toFixed(2)}%`;
+                        document.getElementById('energy-gauge').style.width = `${(energyValue / 2)}%`;
+                    }, 2000);
+                }
                 
-                    // Function to confirm emergency shutoff
-                    function confirmEmergencyShutoff() {
-                        const password = document.getElementById('password-input2').value;
-                        if (password === '1995') {
-                            const confirmed = confirm("Are you sure you want to toggle the Emergency Shutoff?");
-                            if (confirmed) {
-                                toggleEmergencyShutoff();
-                            }
-                        } else {
-                            alert("Incorrect password. Access denied.");
-                        }
-                    }
+                // Function to confirm emergency shutoff
+                function confirmEmergencyShutoff() {
+                    const password = document.getElementById('password-input2').value;
+                    const errorMessage = document.getElementById('error-message');
+                    const btn = document.getElementById('emergency-shutoff-btn');
                     
-                    function confirmBackupGenerator() {
-                        const password = document.getElementById('password-input2').value;
-                        if (password === '1995') {
-                            const confirmed = confirm("Are you sure you want to toggle the Backup Generator?");
-                            if (confirmed) {
-                                toggleBackupGenerator();
-                            }
-                        } else {
-                            alert("Incorrect password. Access denied.");
-                        }
-                    }
-                
-                    // Function to toggle emergency shutoff
-                    function toggleEmergencyShutoff() {
+                    if (password === '1995') {
+                        errorMessage.style.display = 'none';
+                        btn.disabled = true;
+                        btn.textContent = "Sending...";
                         setTimeout(() => {
-                        const valveStatus = document.getElementById('valve-status');
-                        valveStatus.innerHTML = valveStatus.innerHTML === 'Open' ? 'Closed' : 'Open';
-                        const status = document.getElementById('control-status');
-                        status.textContent = valveStatus.innerHTML === 'Closed' ? 'ON' : 'OFF';
-                
-                            // Blink status light
-                            blinkLight('plant-status-light');
-                        }, 2000);
+                            toggleEmergencyShutoff();
+                            btn.disabled = false;
+                            btn.textContent = "Toggle Emergency Shutoff";
+                        }, 2000); // Simulate delay
+                    } else {
+                        errorMessage.style.display = 'block';
                     }
+                }
                 
-                    // Function to toggle backup generator with a delay
-                    function toggleBackupGenerator() {
+                // Function to confirm backup generator
+                function confirmBackupGenerator() {
+                    const password = document.getElementById('password-input2').value;
+                    const errorMessage = document.getElementById('error-message');
+                    const btn = document.getElementById('backup-generator-btn');
+                
+                    if (password === '1995') {
+                        errorMessage.style.display = 'none';
+                        btn.disabled = true;
+                        btn.textContent = "Sending...";
                         setTimeout(() => {
-                            const backupStatus = document.getElementById('backup-status');
-                            backupStatus.innerHTML = backupStatus.innerHTML === 'OFF' ? 'ON' : 'OFF';
-                            const control2 = document.getElementById('control2');
-                            control2.style.display = 'block';
-                
-                            // Blink status light
-                            blinkLight('energy-light');
-                        }, 2000);
+                            toggleBackupGenerator();
+                            btn.disabled = false;
+                            btn.textContent = "Toggle Backup Generator";
+                        }, 2000); // Simulate delay
+                    } else {
+                        errorMessage.style.display = 'block';
                     }
+                }
                 
-                    // Function to blink status light
-                    function blinkLight(lightId) {
-                        const light = document.getElementById(lightId);
-                        light.classList.add('blinking');
-                        setTimeout(() => {
-                            light.classList.remove('blinking');
-                        }, 500);
-                    }
+                // Function to toggle emergency shutoff
+                function toggleEmergencyShutoff() {
+                    const valveStatus = document.getElementById('valve-status');
+                    valveStatus.innerHTML = valveStatus.innerHTML === 'Open' ? 'Closed' : 'Open';
+                    const status = document.getElementById('control-status');
+                    status.textContent = valveStatus.innerHTML === 'Closed' ? 'ON' : 'OFF';
+                    blinkLight('plant-status-light');
+                }
                 
-                    // Initialize values
-                    updateValues();
+                // Function to toggle backup generator with a delay
+                function toggleBackupGenerator() {
+                    const backupStatus = document.getElementById('backup-status');
+                    backupStatus.innerHTML = backupStatus.innerHTML === 'OFF' ? 'ON' : 'OFF';
+                    const control2 = document.getElementById('control2');
+                    control2.style.display = 'block';
+                    blinkLight('energy-light');
+                }
+                
+                // Function to blink status light
+                function blinkLight(lightId) {
+                    const light = document.getElementById(lightId);
+                    light.classList.add('blinking');
+                    setTimeout(() => {
+                        light.classList.remove('blinking');
+                    }, 500);
+                }
+                
+                // Initialize values
+                updateValues();
                 </script>
-                
+                                
                 <style>
                     .scada-dashboard {
                         display: grid;
