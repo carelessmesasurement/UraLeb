@@ -259,87 +259,99 @@
                 </div>
 
                 <div id="employee-section" class="content-section" style="display:none;">
+                <div id="employee-section" class="content-section" style="display:none;">
                     <h2>Employee Portal</h2>
                     <p>Welcome to the portal. Please select an option to proceed:</p>
                     <button onclick="showLoading('logs-section')" class="nav-button">View Research Logs</button>
                     <button onclick="showLoading('faults-section')" class="nav-button">View Power Plant Faults</button>
                     <button onclick="showLoading('plant-section')" class="nav-button">Access Remote Plant Controls</button>
                 </div>
-            
-            <!-- Loading Window -->
-            <div id="loading-window" class="loading-window" style="display:none;">
-                <p id="loading-text">Connecting...</p>
-                <div class="throbber">
-                    <div class="throbber-bar"></div>
+                
+                <!-- Loading Window -->
+                <div id="loading-window" class="loading-window" style="display:none;">
+                    <p id="loading-text">Connecting...</p>
+                    <div class="throbber">
+                        <div class="throbber-bar"></div>
+                    </div>
+                    <button id="cancel-btn" onclick="cancelLoading()">Cancel</button>
                 </div>
-                <button id="cancel-btn" onclick="cancelLoading()">Cancel</button>
-            </div>
-            
-            <style>
-                .loading-window {
-                    background-color: #f0f0f0;
-                    border: 1px solid #ccc;
-                    padding: 10px;
-                    width: 300px;
-                    text-align: center;
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    font-family: 'Courier New', Courier, monospace;
-                    font-size: 14px;
-                    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
-                }
-            
-                .throbber {
-                    width: 100%;
-                    height: 10px;
-                    background-color: #ccc;
-                    margin: 10px 0;
-                    overflow: hidden;
-                    position: relative;
-                }
-            
-                .throbber-bar {
-                    width: 0;
-                    height: 100%;
-                    background-color: #4CAF50;
-                    animation: throbber-animation 2s linear infinite;
-                }
-            
-                @keyframes throbber-animation {
-                    0% { width: 0; }
-                    50% { width: 100%; }
-                    100% { width: 0; }
-                }
-            </style>
-            
-            <script>
-                function showLoading(sectionId) {
-                    // Show the loading window
-                    const loadingWindow = document.getElementById('loading-window');
-                    loadingWindow.style.display = 'block';
-            
-                    // Simulate loading process
-                    let loadingText = document.getElementById('loading-text');
-                    loadingText.innerText = "Connecting...";
-                    
-                    setTimeout(() => {
-                        loadingText.innerText = "Retrieving data...";
-                        // Simulate data retrieval delay
+                
+                <style>
+                    .loading-window {
+                        background-color: #f0f0f0;
+                        border: 1px solid #ccc;
+                        padding: 10px;
+                        width: 300px;
+                        text-align: center;
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        font-family: 'Courier New', Courier, monospace;
+                        font-size: 14px;
+                        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+                    }
+                
+                    .throbber {
+                        width: 100%;
+                        height: 10px;
+                        background-color: #ccc;
+                        margin: 10px 0;
+                        overflow: hidden;
+                        position: relative;
+                    }
+                
+                    .throbber-bar {
+                        width: 0;
+                        height: 100%;
+                        background-color: #4CAF50;
+                        animation: throbber-animation 2s linear infinite;
+                    }
+                
+                    @keyframes throbber-animation {
+                        0% { width: 0; }
+                        50% { width: 100%; }
+                        100% { width: 0; }
+                    }
+                </style>
+                
+                <script>
+                    let loadingInProgress = false; // Track if loading is in progress
+                
+                    function showLoading(sectionId) {
+                        // Show the loading window
+                        const loadingWindow = document.getElementById('loading-window');
+                        loadingWindow.style.display = 'block';
+                        loadingInProgress = true; // Set loading status
+                
+                        // Simulate loading process with random timing
+                        const connectionDelay = Math.floor(Math.random() * 3000) + 1000; // Random delay between 1 to 4 seconds
+                        const retrievalDelay = Math.floor(Math.random() * 3000) + 1000; // Random delay between 1 to 4 seconds
+                
+                        let loadingText = document.getElementById('loading-text');
+                        loadingText.innerText = "Connecting...";
+                
                         setTimeout(() => {
-                            // Hide loading window after data retrieval
-                            loadingWindow.style.display = 'none';
-                            displaySection(sectionId); // Call function to display the selected section
-                        }, 2000); // Simulated data retrieval delay
-                    }, 2000); // Simulated connection delay
-                }
-            
-                function cancelLoading() {
-                    const loadingWindow = document.getElementById('loading-window');
-                    loadingWindow.style.display = 'none'; // Hide the loading window immediately
-                }
-            </script>
+                            if (loadingInProgress) { // Check if loading is still in progress
+                                loadingText.innerText = "Retrieving data...";
+                                // Simulate data retrieval delay
+                                setTimeout(() => {
+                                    if (loadingInProgress) { // Check if loading is still in progress
+                                        loadingWindow.style.display = 'none';
+                                        displaySection(sectionId); // Call function to display the selected section
+                                    }
+                                }, retrievalDelay);
+                            }
+                        }, connectionDelay);
+                    }
+                
+                    function cancelLoading() {
+                        loadingInProgress = false; // Set loading status to false
+                        const loadingWindow = document.getElementById('loading-window');
+                        loadingWindow.style.display = 'none'; // Hide the loading window immediately
+                    }
+                </script>
+
 
                 <div id="logs-section" class="content-section" style="display:none;">
                     <h2>Research Logs</h2>
