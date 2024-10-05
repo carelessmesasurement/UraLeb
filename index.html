@@ -345,6 +345,54 @@
                     </div>
                     
                     <script>
+                        function confirmEmergencyShutoff() {
+                        const password = document.getElementById('password-input2').value;
+                        const errorMessage = document.getElementById('error-message');
+                        const btn = document.getElementById('emergency-shutoff-btn');
+                        
+                        if (password === '1995') {
+                            errorMessage.style.display = 'none';
+                            btn.disabled = true;
+                            btn.textContent = "Sending...";
+                            setTimeout(() => {
+                                toggleEmergencyShutoff();
+                                btn.disabled = false;
+                                btn.textContent = "Toggle Emergency Shutoff";
+                            }, 2000); // Simulate delay
+                        } else {
+                            errorMessage.style.display = 'block';
+                        }
+                    }
+                    
+                    // Function to confirm backup generator
+                    function confirmBackupGenerator() {
+                        const password = document.getElementById('password-input2').value;
+                        const errorMessage = document.getElementById('error-message');
+                        const btn = document.getElementById('backup-generator-btn');
+                    
+                        if (password === '1995') {
+                            errorMessage.style.display = 'none';
+                            btn.disabled = true;
+                            btn.textContent = "Sending...";
+                            setTimeout(() => {
+                                toggleBackupGenerator();
+                                btn.disabled = false;
+                                btn.textContent = "Toggle Backup Generator";
+                            }, 2000); // Simulate delay
+                        } else {
+                            errorMessage.style.display = 'block';
+                        }
+                    }
+                    
+                    // Function to toggle backup generator with a delay
+                    function toggleBackupGenerator() {
+                        const backupStatus = document.getElementById('backup-status');
+                        backupStatus.innerHTML = backupStatus.innerHTML === 'OFF' ? 'ON' : 'OFF';
+                        const control2 = document.getElementById('control2');
+                        control2.style.display = 'block';
+                        blinkLight('energy-light');
+                    }
+
                         let tempValue = 75;
                         let pressureValue = 150;
                         let radValue = 0.1;
@@ -449,6 +497,10 @@
                         function toggleEmergencyShutoff() {
                             const valveStatus = document.getElementById('valve-status');
                             const status = document.getElementById('control-status');
+                            valveStatus.innerHTML = valveStatus.innerHTML === 'Open' ? 'Closed' : 'Open';
+                            const status = document.getElementById('control-status');
+                            status.textContent = valveStatus.innerHTML === 'Closed' ? 'ON' : 'OFF';
+                            blinkLight('plant-status-light');
                     
                             if (valveStatus.innerHTML === 'Open') {
                                 isPlantOperational = false; // Turn off the plant
