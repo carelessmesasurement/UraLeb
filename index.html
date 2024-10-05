@@ -499,7 +499,7 @@
                             status.textContent = valveStatus.innerHTML === 'Closed' ? 'ON' : 'OFF';
                             blinkLight('plant-status-light');
                     
-                            if (valveStatus.innerHTML === 'Open') {
+                            if (valveStatus.innerHTML === 'Inactive') {
                                 isPlantOperational = false; // Turn off the plant
                                 gradualShutdown(); // Gradually decrease values
                                 valveStatus.innerHTML = 'Active';
