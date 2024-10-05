@@ -379,7 +379,9 @@
                 
                         drawClockFace(ctx, radius);
                         drawClockHands(ctx, radius, hour, minute, second);
-                        ctx.rotate(Math.PI / 2); // Reset rotation for other widgets
+                        
+                        // Reset transformations
+                        ctx.rotate(Math.PI / 2); // Rotate back to original orientation
                         ctx.translate(-radius, -radius); // Move back to original position
                     }
                 
@@ -405,7 +407,7 @@
                     function drawClockHands(ctx, radius, hour, minute, second) {
                         // Hour hand
                         ctx.save();
-                        ctx.rotate(((hour + 3) * Math.PI) / 6 + (minute * Math.PI) / 360);
+                        ctx.rotate((hour * Math.PI) / 6 + (minute * Math.PI) / 360);
                         ctx.beginPath();
                         ctx.moveTo(0, 0);
                         ctx.lineTo(0, -radius * 0.5);
@@ -415,7 +417,7 @@
                 
                         // Minute hand
                         ctx.save();
-                        ctx.rotate((minute + 15) * Math.PI) / 30);
+                        ctx.rotate((minute * Math.PI) / 30);
                         ctx.beginPath();
                         ctx.moveTo(0, 0);
                         ctx.lineTo(0, -radius * 0.75);
@@ -425,7 +427,7 @@
                 
                         // Second hand
                         ctx.save();
-                        ctx.rotate(((second + 15) * Math.PI) / 30);
+                        ctx.rotate((second * Math.PI) / 30);
                         ctx.beginPath();
                         ctx.moveTo(0, 0);
                         ctx.lineTo(0, -radius * 0.9);
@@ -445,8 +447,7 @@
                     setInterval(updateAnalogClock, 1000);
                     updateAnalogClock(); // Initial call to set clock immediately
                     updateCalendar();
-                </script>
-                         
+                </script>        
                 <!-- Loading Window -->
                 <div id="loading-window" class="loading-window" style="display:none;">
                     <p id="loading-text">Connecting...</p>
