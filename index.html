@@ -366,9 +366,11 @@
                         const canvas = document.getElementById('analog-clock');
                         const ctx = canvas.getContext('2d');
                         const radius = canvas.height / 2;
+                
+                        // Clear the canvas
                         ctx.clearRect(0, 0, canvas.width, canvas.height);
-                        ctx.translate(radius, radius);
-                        ctx.rotate(-Math.PI / 2); // Rotate for easier drawing
+                        ctx.translate(radius, radius); // Move the origin to the center of the clock
+                        ctx.rotate(-Math.PI / 2); // Rotate to make 12 at the top
                 
                         const now = new Date();
                         const hour = now.getHours() % 12;
@@ -378,6 +380,7 @@
                         drawClockFace(ctx, radius);
                         drawClockHands(ctx, radius, hour, minute, second);
                         ctx.rotate(Math.PI / 2); // Reset rotation for other widgets
+                        ctx.translate(-radius, -radius); // Move back to original position
                     }
                 
                     function drawClockFace(ctx, radius) {
@@ -440,6 +443,7 @@
                     }
                 
                     setInterval(updateAnalogClock, 1000);
+                    updateAnalogClock(); // Initial call to set clock immediately
                     updateCalendar();
                 </script>
                          
