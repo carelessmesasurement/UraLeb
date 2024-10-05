@@ -393,21 +393,25 @@
                         ctx.lineWidth = 2;
                         ctx.stroke();
                 
-                        // Draw numbers
-                        ctx.font = "16px Arial";
-                        ctx.fillStyle = 'black';
+                        // Draw lines for hour markers
+                        ctx.lineWidth = 2;
                         for (let i = 1; i <= 12; i++) {
-                            const angle = (i * Math.PI) / 6;
-                            const x = (radius - 25) * Math.cos(angle);
-                            const y = (radius - 25) * Math.sin(angle);
-                            ctx.fillText(i, x - 8, y + 6); // Adjust position for better centering
+                            const angle = (i * Math.PI) / 6; // Angle in radians
+                            const x1 = (radius - 15) * Math.cos(angle);
+                            const y1 = (radius - 15) * Math.sin(angle);
+                            const x2 = (radius - 25) * Math.cos(angle);
+                            const y2 = (radius - 25) * Math.sin(angle);
+                            ctx.beginPath();
+                            ctx.moveTo(x1, y1);
+                            ctx.lineTo(x2, y2);
+                            ctx.stroke();
                         }
                     }
                 
                     function drawClockHands(ctx, radius, hour, minute, second) {
                         // Hour hand
                         ctx.save();
-                        ctx.rotate((hour * Math.PI) / 6 + (minute * Math.PI) / 360);
+                        ctx.rotate((hour * Math.PI) / 6 + (minute * Math.PI) / 360 + Math.PI / 2); // Offset by 90 degrees
                         ctx.beginPath();
                         ctx.moveTo(0, 0);
                         ctx.lineTo(0, -radius * 0.5);
@@ -417,7 +421,7 @@
                 
                         // Minute hand
                         ctx.save();
-                        ctx.rotate((minute * Math.PI) / 30);
+                        ctx.rotate((minute * Math.PI) / 30 + Math.PI / 2); // Offset by 90 degrees
                         ctx.beginPath();
                         ctx.moveTo(0, 0);
                         ctx.lineTo(0, -radius * 0.75);
@@ -427,7 +431,7 @@
                 
                         // Second hand
                         ctx.save();
-                        ctx.rotate((second * Math.PI) / 30);
+                        ctx.rotate((second * Math.PI) / 30 + Math.PI / 2); // Offset by 90 degrees
                         ctx.beginPath();
                         ctx.moveTo(0, 0);
                         ctx.lineTo(0, -radius * 0.9);
@@ -447,7 +451,8 @@
                     setInterval(updateAnalogClock, 1000);
                     updateAnalogClock(); // Initial call to set clock immediately
                     updateCalendar();
-                </script>        
+                </script>
+
                 <!-- Loading Window -->
                 <div id="loading-window" class="loading-window" style="display:none;">
                     <p id="loading-text">Connecting...</p>
