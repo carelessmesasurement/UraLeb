@@ -486,6 +486,7 @@
                     
                                 if (tempValue === originalTempValue && pressureValue === originalPressureValue && energyValue === originalEnergyValue) {
                                     clearInterval(restartInterval); // Stop restart when all values reach target
+                                    updateValues();
                                 }
                             }, 500); // Update every 500ms
                         }
