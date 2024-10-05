@@ -259,12 +259,89 @@
                 </div>
 
                 <div id="employee-section" class="content-section" style="display:none;">
-                    <h2>Employee Hub</h2>
-                    <p>Welcome to the employee hub. Please select an option to proceed:</p>
-                    <button onclick="displaySection('logs-section')" class="nav-button">View Research Logs</button>
-                    <button onclick="displaySection('faults-section')" class="nav-button">View Power Plant Faults</button>
-                    <button onclick="displaySection('plant-section')" class="nav-button">Access remote Plant Plant controls</button>
+                    <h2>Employee Portal</h2>
+                    <p>Welcome to the portal. Please select an option to proceed:</p>
+                    <button onclick="showLoading('logs-section')" class="nav-button">View Research Logs</button>
+                    <button onclick="showLoading('faults-section')" class="nav-button">View Power Plant Faults</button>
+                    <button onclick="showLoading('plant-section')" class="nav-button">Access Remote Plant Controls</button>
+                
+                    <!-- Loading Window -->
+                    <div id="loading-window" class="loading-window" style="display:none;">
+                        <div class="loading-content">
+                            <p id="loading-message">Connecting...</p>
+                            <div class="throbber"></div>
+                            <button id="cancel-button" onclick="cancelLoading()">Cancel</button>
+                        </div>
+                    </div>
                 </div>
+                
+                <!-- CSS for Loading Window -->
+                <style>
+                    .loading-window {
+                        position: fixed;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        background-color: #f0f0f0;
+                        border: 2px solid #999;
+                        padding: 20px;
+                        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+                        z-index: 1000;
+                        font-family: 'Courier New', monospace;
+                    }
+                    .loading-content {
+                        text-align: center;
+                    }
+                    .throbber {
+                        width: 20px;
+                        height: 20px;
+                        margin: 10px auto;
+                        border: 4px solid #999;
+                        border-top: 4px solid #333;
+                        border-radius: 50%;
+                        animation: spin 1s linear infinite;
+                    }
+                    @keyframes spin {
+                        0% { transform: rotate(0deg); }
+                        100% { transform: rotate(360deg); }
+                    }
+                    #cancel-button {
+                        margin-top: 10px;
+                        padding: 5px 10px;
+                        background-color: #ccc;
+                        border: 1px solid #999;
+                        cursor: pointer;
+                        font-family: 'Courier New', monospace;
+                    }
+                </style>
+                
+                <!-- JavaScript for Loading Functionality -->
+                <script>
+                    function showLoading(section) {
+                        const loadingWindow = document.getElementById('loading-window');
+                        loadingWindow.style.display = 'block';
+                
+                        // Change the message after a delay
+                        setTimeout(() => {
+                            document.getElementById('loading-message').innerText = 'Retrieving data...';
+                            // Simulate data retrieval
+                            setTimeout(() => {
+                                loadingWindow.style.display = 'none'; // Close loading window
+                                displaySection(section); // Display the selected section
+                            }, 2000); // Simulate data retrieval time
+                        }, 2000); // Time before changing message
+                    }
+                
+                    function cancelLoading() {
+                        const loadingWindow = document.getElementById('loading-window');
+                        loadingWindow.style.display = 'none'; // Close loading window
+                    }
+                
+                    function displaySection(section) {
+                        // Your existing code to display the relevant section
+                        console.log(`Displaying section: ${section}`);
+                    }
+                </script>
 
                 <div id="logs-section" class="content-section" style="display:none;">
                     <h2>Research Logs</h2>
