@@ -264,6 +264,18 @@
                         <img src="path/to/office-image.jpg" alt="Office Image" class="office-image">
                     </div>
                 
+                    <!-- Main content section for buttons and widgets -->
+                    <div class="main-content">
+                        <h2>Employee Portal</h2>
+                        <p>Welcome to the portal. Please select an option to proceed:</p>
+                
+                        <div class="button-container">
+                            <button onclick="showLoading('logs-section')" class="nav-button">View Research Logs</button>
+                            <button onclick="showLoading('faults-section')" class="nav-button">View Power Plant Faults</button>
+                            <button onclick="showLoading('plant-section')" class="nav-button">Access Remote Plant Controls</button>
+                        </div>
+                    </div>
+                
                     <!-- Sidebar widgets for clock, calendar, and weather -->
                     <div class="sidebar-widgets">
                         <!-- Analog clock widget -->
@@ -281,26 +293,15 @@
                             <p id="weather-info">Weather: Sunny, 25°C</p>
                         </div>
                     </div>
-                
-                    <!-- Main content section for buttons -->
-                    <div class="main-content">
-                        <h2>Employee Portal</h2>
-                        <p>Welcome to the portal. Please select an option to proceed:</p>
-                
-                        <div class="button-container">
-                            <button onclick="showLoading('logs-section')" class="nav-button">View Research Logs</button>
-                            <button onclick="showLoading('faults-section')" class="nav-button">View Power Plant Faults</button>
-                            <button onclick="showLoading('plant-section')" class="nav-button">Access Remote Plant Controls</button>
-                        </div>
-                    </div>
                 </div>
                 
                 <!-- CSS for layout and styling -->
                 <style>
                     .content-section {
                         display: flex;
-                        flex-direction: column;
-                        align-items: center;
+                        justify-content: space-between;
+                        align-items: flex-start;
+                        margin-top: 20px;
                     }
                 
                     .header-section {
@@ -315,13 +316,17 @@
                         max-height: 250px;
                     }
                 
+                    .main-content {
+                        flex-grow: 1;
+                        text-align: center;
+                    }
+                
                     .sidebar-widgets {
-                        position: absolute;
-                        top: 20px;
-                        left: 20px;
                         display: flex;
                         flex-direction: column;
                         gap: 10px;
+                        margin-left: 20px;
+                        width: 200px; /* Adjust the width as needed */
                     }
                 
                     .widget {
@@ -333,16 +338,25 @@
                         font-family: 'Courier New', Courier, monospace;
                     }
                 
-                    .main-content {
-                        text-align: center;
-                        margin-top: 20px;
-                    }
-                
                     .button-container {
                         display: flex;
                         justify-content: center;
                         gap: 15px;
                         margin-top: 15px;
+                    }
+                
+                    .nav-button {
+                        padding: 10px 20px;
+                        background-color: #007bff;
+                        color: white;
+                        border: none;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        font-family: 'Courier New', Courier, monospace;
+                    }
+                
+                    .nav-button:hover {
+                        background-color: #0056b3;
                     }
                 </style>
                 
@@ -352,8 +366,9 @@
                         const canvas = document.getElementById('analog-clock');
                         const ctx = canvas.getContext('2d');
                         const radius = canvas.height / 2;
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
                         ctx.translate(radius, radius);
-                        ctx.clearRect(-radius, -radius, canvas.width, canvas.height);
+                        ctx.rotate(-Math.PI / 2); // Rotate for easier drawing
                 
                         const now = new Date();
                         const hour = now.getHours() % 12;
@@ -362,39 +377,59 @@
                 
                         drawClockFace(ctx, radius);
                         drawClockHands(ctx, radius, hour, minute, second);
+                        ctx.rotate(Math.PI / 2); // Reset rotation for other widgets
                     }
                 
                     function drawClockFace(ctx, radius) {
                         ctx.beginPath();
-                        ctx.arc(0, 0, radius, 0, 2 * Math.PI);
+                        ctx.arc(0, 0, radius - 10, 0, 2 * Math.PI);
                         ctx.fillStyle = 'white';
                         ctx.fill();
                         ctx.lineWidth = 2;
                         ctx.stroke();
+                
+                        // Draw numbers
+                        ctx.font = "16px Arial";
+                        ctx.fillStyle = 'black';
+                        for (let i = 1; i <= 12; i++) {
+                            const angle = (i * Math.PI) / 6;
+                            const x = (radius - 25) * Math.cos(angle);
+                            const y = (radius - 25) * Math.sin(angle);
+                            ctx.fillText(i, x - 8, y + 6); // Adjust position for better centering
+                        }
                     }
                 
                     function drawClockHands(ctx, radius, hour, minute, second) {
                         // Hour hand
+                        ctx.save();
+                        ctx.rotate((hour * Math.PI) / 6 + (minute * Math.PI) / 360);
                         ctx.beginPath();
                         ctx.moveTo(0, 0);
                         ctx.lineTo(0, -radius * 0.5);
                         ctx.lineWidth = 8;
                         ctx.stroke();
+                        ctx.restore();
                 
                         // Minute hand
+                        ctx.save();
+                        ctx.rotate((minute * Math.PI) / 30);
                         ctx.beginPath();
                         ctx.moveTo(0, 0);
                         ctx.lineTo(0, -radius * 0.75);
                         ctx.lineWidth = 4;
                         ctx.stroke();
+                        ctx.restore();
                 
                         // Second hand
+                        ctx.save();
+                        ctx.rotate((second * Math.PI) / 30);
                         ctx.beginPath();
                         ctx.moveTo(0, 0);
                         ctx.lineTo(0, -radius * 0.9);
                         ctx.lineWidth = 2;
                         ctx.strokeStyle = 'red';
                         ctx.stroke();
+                        ctx.restore();
                     }
                 
                     function updateCalendar() {
@@ -407,7 +442,7 @@
                     setInterval(updateAnalogClock, 1000);
                     updateCalendar();
                 </script>
-                
+                         
                 <!-- Loading Window -->
                 <div id="loading-window" class="loading-window" style="display:none;">
                     <p id="loading-text">Connecting...</p>
