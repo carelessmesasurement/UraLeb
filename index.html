@@ -345,122 +345,220 @@
                     </div>
                     
                     <script>
-                        let plantActive = true; // Flag to track plant status
-                        let originalValues = { temperature: 75, pressure: 150, radiation: 0.10, energy: 100 };
+                    // Function to simulate gradual value changes
+                    function updateValues() {
+                        const temperature = document.getElementById('temperature');
+                        const pressure = document.getElementById('pressure');
+                        const radiation = document.getElementById('radiation-levels');
+                        const energy = document.getElementById('energy-output');
                     
-                        function updateValues() {
-                            const temperature = document.getElementById('temperature');
-                            const pressure = document.getElementById('pressure');
-                            const radiation = document.getElementById('radiation-levels');
-                            const energy = document.getElementById('energy-output');
+                        let tempValue = 75;
+                        let pressureValue = 150;
+                        let radValue = 0.1;
+                        let energyValue = 100;
                     
-                            let tempValue = originalValues.temperature;
-                            let pressureValue = originalValues.pressure;
-                            let radValue = originalValues.radiation;
-                            let energyValue = originalValues.energy;
+                        setInterval(() => {
+                            tempValue += Math.random() > 0.5 ? 1 : -1;
+                            pressureValue += Math.random() > 0.5 ? 1 : -1;
+                            radValue += (Math.random() * 0.1).toFixed(2) * (Math.random() > 0.5 ? 1 : -1);
+                            radValue = Math.max(0, parseFloat(radValue.toFixed(2))); // Cap at 0, round to 2 sigfigs
+                            energyValue += Math.random() > 0.5 ? 2 : -2;
                     
-                            setInterval(() => {
-                                if (plantActive) {
-                                    // Apply random fluctuations when plant is active
-                                    tempValue += Math.random() > 0.5 ? 1 : -1;
-                                    pressureValue += Math.random() > 0.5 ? 1 : -1;
-                                    radValue += (Math.random() * 0.1).toFixed(2) * (Math.random() > 0.5 ? 1 : -1);
-                                    energyValue += Math.random() > 0.5 ? 2 : -2;
-                                }
+                            temperature.innerHTML = `<strong>${tempValue}°C</strong>`;
+                            pressure.innerHTML = `<strong>${pressureValue} Bar</strong>`;
+                            radiation.innerHTML = `<strong>${radValue} µSv/h</strong>`;
+                            energy.innerHTML = `<strong>${energyValue} MW</strong>`;
                     
-                                // Cap radiation value to be minimum of 0
-                                if (radValue < 0) radValue = 0;
+                            // Update gauges
+                            document.getElementById('temperature-gauge').style.width = `${tempValue}%`;
+                            document.getElementById('pressure-gauge').style.width = `${(pressureValue / 2)}%`;
+                            document.getElementById('radiation-gauge').style.width = `${(radValue * 100).toFixed(2)}%`;
+                            document.getElementById('energy-gauge').style.width = `${(energyValue / 2)}%`;
+                        }, 2000);
+                    }
                     
-                                // Update UI
-                                temperature.innerHTML = `<strong>${tempValue}°C</strong>`;
-                                pressure.innerHTML = `<strong>${pressureValue} Bar</strong>`;
-                                radiation.innerHTML = `<strong>${radValue.toFixed(2)} µSv/h</strong>`;
-                                energy.innerHTML = `<strong>${energyValue} MW</strong>`;
-                    
-                                // Update gauges
-                                document.getElementById('temperature-gauge').style.width = `${tempValue}%`;
-                                document.getElementById('pressure-gauge').style.width = `${(pressureValue / 2)}%`;
-                                document.getElementById('radiation-gauge').style.width = `${(radValue * 100).toFixed(2)}%`;
-                                document.getElementById('energy-gauge').style.width = `${(energyValue / 2)}%`;
-                            }, 2000);
-                        }
-                    
-                        function confirmEmergencyShutoff() {
-                            const password = document.getElementById('password-input2').value;
-                            if (password === '1995') {
-                                document.getElementById('control-status').textContent = plantActive ? 'ON' : 'OFF';
-                                toggleEmergencyShutoff();
-                            } else {
-                                document.getElementById('password-input2').classList.add('error'); // Display error instead of alert
-                            }
-                        }
-                    
-                        function toggleEmergencyShutoff() {
-                            plantActive = !plantActive; // Toggle plant status
-                    
-                            if (!plantActive) {
-                                gradualDecrease(); // Start decreasing values
-                            } else {
-                                gradualIncrease(); // Reactivate and increase values
-                            }
-                    
-                            blinkLight('plant-status-light');
-                        }
-                    
-                        function gradualDecrease() {
-                            let tempValue = originalValues.temperature;
-                            let pressureValue = originalValues.pressure;
-                            let radValue = originalValues.radiation;
-                            let energyValue = originalValues.energy;
-                    
-                            let decreaseInterval = setInterval(() => {
-                                if (tempValue > 21) tempValue -= 0.5;
-                                if (pressureValue > 0) pressureValue -= 1;
-                                if (radValue > 0) radValue = Math.max(0, radValue - 0.01);
-                                if (energyValue > 0) energyValue -= 1;
-                    
-                                // Update UI
-                                document.getElementById('temperature').innerHTML = `<strong>${tempValue}°C</strong>`;
-                                document.getElementById('pressure').innerHTML = `<strong>${pressureValue} Bar</strong>`;
-                                document.getElementById('radiation-levels').innerHTML = `<strong>${radValue.toFixed(2)} µSv/h</strong>`;
-                                document.getElementById('energy-output').innerHTML = `<strong>${energyValue} MW</strong>`;
-                    
-                                if (tempValue <= 0 && pressureValue <= 0 && radValue <= 0 && energyValue <= 0) {
-                                    clearInterval(decreaseInterval); // Stop decreasing once all values reach 0
-                                }
-                            }, 1000); // Decrease values gradually every second
-                        }
-                    
-                        function gradualIncrease() {
-                    
-                            let increaseInterval = setInterval(() => {
-                                if (tempValue < originalValues.temperature) tempValue += 1;
-                                if (pressureValue < originalValues.pressure) pressureValue += 1;
-                                if (radValue < originalValues.radiation) radValue += 0.01;
-                                if (energyValue < originalValues.energy) energyValue += 1;
-                    
-                                // Update UI
-                                document.getElementById('temperature').innerHTML = `<strong>${tempValue}°C</strong>`;
-                                document.getElementById('pressure').innerHTML = `<strong>${pressureValue} Bar</strong>`;
-                                document.getElementById('radiation-levels').innerHTML = `<strong>${radValue.toFixed(2)} µSv/h</strong>`;
-                                document.getElementById('energy-output').innerHTML = `<strong>${energyValue} MW</strong>`;
-                    
-                                if (tempValue >= originalValues.temperature && pressureValue >= originalValues.pressure &&
-                                    radValue >= originalValues.radiation && energyValue >= originalValues.energy) {
-                                    clearInterval(increaseInterval); // Stop increasing once values reach original levels
-                                }
-                            }, 1000); // Increase values gradually every second
-                        }
-                    
-                        function blinkLight(lightId) {
-                            const light = document.getElementById(lightId);
-                            light.classList.add('blinking');
+                    // Function to confirm emergency shutoff
+                    function confirmEmergencyShutoff() {
+                        const password = document.getElementById('password-input2').value;
+                        const errorMessage = document.getElementById('error-message');
+                        const btn = document.getElementById('emergency-shutoff-btn');
+                        
+                        if (password === '1995') {
+                            errorMessage.style.display = 'none';
+                            btn.disabled = true;
+                            btn.textContent = "Sending...";
                             setTimeout(() => {
-                                light.classList.remove('blinking');
-                            }, 3000);
+                                toggleEmergencyShutoff();
+                                btn.disabled = false;
+                                btn.textContent = "Toggle Emergency Shutoff";
+                            }, 2000); // Simulate delay
+                        } else {
+                            errorMessage.style.display = 'block';
                         }
+                    }
                     
-                        updateValues(); // Start updating values on page load
+                    // Function to confirm backup generator
+                    function confirmBackupGenerator() {
+                        const password = document.getElementById('password-input2').value;
+                        const errorMessage = document.getElementById('error-message');
+                        const btn = document.getElementById('backup-generator-btn');
+                    
+                        if (password === '1995') {
+                            errorMessage.style.display = 'none';
+                            btn.disabled = true;
+                            btn.textContent = "Sending...";
+                            setTimeout(() => {
+                                toggleBackupGenerator();
+                                btn.disabled = false;
+                                btn.textContent = "Toggle Backup Generator";
+                            }, 2000); // Simulate delay
+                        } else {
+                            errorMessage.style.display = 'block';
+                        }
+                    }
+                    
+                    // Function to toggle emergency shutoff
+                    function toggleEmergencyShutoff() {
+                        const valveStatus = document.getElementById('valve-status');
+                        valveStatus.innerHTML = valveStatus.innerHTML === 'Open' ? 'Closed' : 'Open';
+                        const status = document.getElementById('control-status');
+                        status.textContent = valveStatus.innerHTML === 'Closed' ? 'ON' : 'OFF';
+                        blinkLight('plant-status-light');
+                    }
+                    
+                    // Function to toggle backup generator with a delay
+                    function toggleBackupGenerator() {
+                        const backupStatus = document.getElementById('backup-status');
+                        backupStatus.innerHTML = backupStatus.innerHTML === 'OFF' ? 'ON' : 'OFF';
+                        const control2 = document.getElementById('control2');
+                        control2.style.display = 'block';
+                        blinkLight('energy-light');
+                    }
+                    
+                    // Function to blink status light
+                    function blinkLight(lightId) {
+                        const light = document.getElementById(lightId);
+                        light.classList.add('blinking');
+                        setTimeout(() => {
+                            light.classList.remove('blinking');
+                        }, 500);
+                    }
+
+                let tempValue = 75;
+                let pressureValue = 150;
+                let radValue = 0.1;
+                let energyValue = 100;
+                
+                let originalTempValue = tempValue;
+                let originalPressureValue = pressureValue;
+                let originalRadValue = radValue;
+                let originalEnergyValue = energyValue;
+                
+                let isPlantOperational = true; // Track if the plant is operational
+                
+                // Function to simulate gradual value changes when plant is operational
+                function updateValues() {
+                    const temperature = document.getElementById('temperature');
+                    const pressure = document.getElementById('pressure');
+                    const radiation = document.getElementById('radiation-levels');
+                    const energy = document.getElementById('energy-output');
+                
+                    setInterval(() => {
+                        if (isPlantOperational) {
+                            tempValue += Math.random() > 0.5 ? 1 : -1;
+                            pressureValue += Math.random() > 0.5 ? 1 : -1;
+                            radValue += (Math.random() * 0.1).toFixed(2) * (Math.random() > 0.5 ? 1 : -1);
+                            energyValue += Math.random() > 0.5 ? 2 : -2;
+                        }
+                
+                        // Update the displayed values
+                        temperature.innerHTML = `<strong>${tempValue}°C</strong>`;
+                        pressure.innerHTML = `<strong>${pressureValue} Bar</strong>`;
+                        radiation.innerHTML = `<strong>${radValue} µSv/h</strong>`;
+                        energy.innerHTML = `<strong>${energyValue} MW</strong>`;
+                
+                        // Update gauges
+                        document.getElementById('temperature-gauge').style.width = `${tempValue}%`;
+                        document.getElementById('pressure-gauge').style.width = `${(pressureValue / 2)}%`;
+                        document.getElementById('radiation-gauge').style.width = `${(radValue * 100).toFixed(2)}%`;
+                        document.getElementById('energy-gauge').style.width = `${(energyValue / 2)}%`;
+                    }, 2000);
+                }
+                
+                // Function to gradually decrease values when emergency shutoff is active
+                function gradualShutdown() {
+                    const interval = setInterval(() => {
+                        if (tempValue > 21) tempValue -= 1;
+                        if (pressureValue > 0) pressureValue -= 1;
+                        if (radValue > 0) radValue -= 0.01;
+                        if (energyValue > 0) energyValue -= 2;
+                
+                        // Cap the values to prevent going below minimum
+                        tempValue = Math.max(tempValue, 21);
+                        pressureValue = Math.max(pressureValue, 0);
+                        radValue = Math.max(radValue, 0).toFixed(2);
+                        energyValue = Math.max(energyValue, 0);
+                
+                        // Update the displayed values
+                        document.getElementById('temperature').innerHTML = `<strong>${tempValue}°C</strong>`;
+                        document.getElementById('pressure').innerHTML = `<strong>${pressureValue} Bar</strong>`;
+                        document.getElementById('radiation-levels').innerHTML = `<strong>${radValue} µSv/h</strong>`;
+                        document.getElementById('energy-output').innerHTML = `<strong>${energyValue} MW</strong>`;
+                
+                        // Stop the interval if all values reach their target
+                        if (tempValue === 21 && pressureValue === 0 && radValue === '0.00' && energyValue === 0) {
+                            clearInterval(interval);
+                        }
+                    }, 500);
+                }
+                
+                // Function to gradually increase values when plant is reactivated
+                function gradualRestart() {
+                    const interval = setInterval(() => {
+                        if (tempValue < originalTempValue) tempValue += 1;
+                        if (pressureValue < originalPressureValue) pressureValue += 1;
+                        if (radValue < originalRadValue) radValue = (parseFloat(radValue) + 0.01).toFixed(2);
+                        if (energyValue < originalEnergyValue) energyValue += 2;
+                
+                        // Ensure values don't exceed original values
+                        tempValue = Math.min(tempValue, originalTempValue);
+                        pressureValue = Math.min(pressureValue, originalPressureValue);
+                        radValue = Math.min(radValue, originalRadValue).toFixed(2);
+                        energyValue = Math.min(energyValue, originalEnergyValue);
+                
+                        // Update the displayed values
+                        document.getElementById('temperature').innerHTML = `<strong>${tempValue}°C</strong>`;
+                        document.getElementById('pressure').innerHTML = `<strong>${pressureValue} Bar</strong>`;
+                        document.getElementById('radiation-levels').innerHTML = `<strong>${radValue} µSv/h</strong>`;
+                        document.getElementById('energy-output').innerHTML = `<strong>${energyValue} MW</strong>`;
+                
+                        // Stop the interval if all values reach their original target
+                        if (tempValue === originalTempValue && pressureValue === originalPressureValue && radValue === originalRadValue && energyValue === originalEnergyValue) {
+                            clearInterval(interval);
+                        }
+                    }, 500);
+                }
+                
+                // Function to toggle emergency shutoff
+                function toggleEmergencyShutoff() {
+                    const valveStatus = document.getElementById('valve-status');
+                    const status = document.getElementById('control-status');
+                
+                    if (valveStatus.innerHTML === 'Open') {
+                        isPlantOperational = false; // Turn off the plant
+                        gradualShutdown(); // Gradually decrease values
+                        valveStatus.innerHTML = 'Active';
+                        status.textContent = 'ON';
+                    } else {
+                        isPlantOperational = true; // Reactivate the plant
+                        gradualRestart(); // Gradually increase values
+                        valveStatus.innerHTML = 'Inactive';
+                        status.textContent = 'OFF';
+                    }
+                    
+                    // Initialize values
+                    updateValues();
+
                     </script>
                                 
                 <style>
