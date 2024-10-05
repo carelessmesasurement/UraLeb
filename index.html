@@ -339,7 +339,7 @@
                     </div>
                 
                     <h3>SCADA Controls</h3>
-                    <input type="password" id="password-input" placeholder="Enter Password" />
+                    <input type="password" id="password-input2" placeholder="Enter Password" />
                     <button class="retro-button" onclick="confirmEmergencyShutoff()">Toggle Emergency Shutoff</button>
                     <div id="control1" style="display:none;">
                         <p>Emergency shutoff is now <span id="control-status">OFF</span>.</p>
@@ -385,8 +385,8 @@
                 
                     // Function to confirm emergency shutoff
                     function confirmEmergencyShutoff() {
-                        const password = document.getElementById('password-input').value;
-                        if (password === 'UraLeb') {
+                        const password = document.getElementById('password-input2').value;
+                        if (password === '1995') {
                             const confirmed = confirm("Are you sure you want to toggle the Emergency Shutoff?");
                             if (confirmed) {
                                 toggleEmergencyShutoff();
@@ -397,8 +397,8 @@
                     }
                     
                     function confirmBackupGenerator() {
-                        const password = document.getElementById('password-input').value;
-                        if (password === 'UraLeb') {
+                        const password = document.getElementById('password-input2').value;
+                        if (password === '1995') {
                             const confirmed = confirm("Are you sure you want to toggle the Backup Generator?");
                             if (confirmed) {
                                 toggleBackupGenerator();
